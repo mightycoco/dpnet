@@ -44,24 +44,3 @@ CREATE TABLE events (
     loc_latitude FLOAT NOT NULL,
     loc_longitude FLOAT NOT NULL
 );
-
-Event Item:
-  {
-      "description": "Into Madness - Festival ** Ice Edition - bald erfahrt ihr mehr!",
-      "end_time": "2017-02-04T05:00:00+0100",
-      "name": "Into Madness - Festival ** Ice Edition",
-      "place": {
-        "name": "Melodrom (official)",
-        "location": {
-          "city": "Kaufbeuren",
-          "country": "Germany",
-          "latitude": 47.899786570216,
-          "longitude": 10.64230799675,
-          "street": "Sudetenstraße 12",
-          "zip": "87600"
-        },
-        "id": "134710983252535"
-      },
-      "start_time": "2017-02-03T08:00:00+0100",
-      "id": "1244243932306604"
-    },
