@@ -4,7 +4,8 @@ public facing website DPN
 
 ## Configuration
 
-Read and edit `config/app.php` and setup the 'Datasources' and any other
+- Copy `config/app.default.php` to `config/app.php`
+- Read and edit `config/app.php` and setup the 'Datasources' and any other
 configuration relevant for your application.
 
-Set the facebook app_id and secret as well as redirect_uri to fetch the required app-token
+- Set the facebook app_id and secret as well as redirect_uri to fetch the required app-token
