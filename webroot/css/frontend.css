@@ -1,0 +1,184 @@
+body {
+	background:#333;
+	color:#999;
+	font-family:segoe ui, arial, verdana,sans-serif;
+}
+
+.right {
+    float: right;
+    clear: both;
+}
+
+header, footer {
+    padding: 0px 15px;
+    background: #356;
+    min-height: 40px;
+}
+header {
+	height: 80px;
+	line-height: 80px;
+	font-size: 2em;
+	color: #89a;
+	position: fixed;
+	width: 100%;
+	z-index: 2;
+}
+
+footer {
+	color: #999;
+	padding: 15px;
+}
+
+section {
+	max-width:900px;
+	margin:auto auto;
+}
+
+#map {
+   position: fixed !important;
+   max-width: 900px;
+   width: 100%;
+   height: 300px;
+   background: #ddd;
+   z-index: 1;
+   top: 80px;
+   left: calc(50% - 450px);
+}
+
+#agenda {
+	align-items:stretch;
+	display: flex;
+	flex-wrap: wrap;
+	padding-top: 380px;
+}
+
+.event {
+	padding:5px;
+	margin:5px;
+	max-width:200px;
+	min-width:100px;
+	min-height:120px;
+	cursor:default;
+}
+.event name {
+	color:#fff;
+	font-size:1.2em;
+}
+.event.weekend {
+	background:#444;
+}
+.event.daysplit {
+	background:#a25d04;width:100px;
+}
+.event.daysplit name {
+	transform: rotate(270deg);
+	display: inline-block;
+	transform-origin: 54px 50px;
+	font-size: 1.2em;
+}
+.event description {
+	display:none
+}
+.event.active {
+	background: #2098D1;
+}
+.event.active description {
+	display:block
+}
+
+#event {
+	display: none;
+	height: 400px;
+	z-index: 100;
+	position: fixed;
+	background: #000;
+	box-shadow: 0px 0px 30px 30px #333;
+	outline: 1px solid #666;
+	max-width: 900px;
+	width: 100%;
+	overflow-y: auto;
+	left: calc(50% - 450px);
+	top: 400px;
+}
+
+#event article {
+	margin: 5px;
+	padding: 5px;
+}
+
+#event description {
+	white-space: pre-wrap; 
+}
+
+#event #close_event:hover {
+    color: #fff;
+}
+
+/* the sticky part becomes active after scrolling down > 40px */
+/*.sticky header {
+	height: 40px;
+	top: 0px;
+	line-height: 40px;
+	font-size: 1em;
+	position: fixed;
+	width: 100%;
+	z-index: 10;
+}
+
+.sticky #map {
+	position: fixed !important;
+	top: 40px;
+	left: calc(50% - 450px);
+	z-index: 10;
+}
+
+.sticky #agenda {
+	margin-top: 240px;
+	background: #333;
+}*/
+
+@media screen and (max-width: 900px) {
+	#agenda, #map, #event {
+		max-width: 100%;
+		left: 0px !important;
+	}
+}
+@media only screen and (max-device-width: 480px) {
+	body {
+		zoom: 1.5;
+		-webkit-touch-callout: none; /* iOS Safari */
+		  -webkit-user-select: none; /* Chrome/Safari/Opera */
+		   -khtml-user-select: none; /* Konqueror */
+		     -moz-user-select: none; /* Firefox */
+		      -ms-user-select: none; /* Internet Explorer/Edge */
+		          user-select: none; /* Non-prefixed version, currently
+		                                not supported by any browser */
+	}
+/*	.event {
+		max-width: 50%;
+		min-width: 50%;
+		margin: 0px;
+		box-sizing: border-box;
+		min-height: 300px;
+	}*/
+	#agenda, #map, #event {
+		max-width: 100%;
+		left: 0px !important;
+	}
+	.fa {
+		font-size: 2em !important;
+	}
+}
+
+@media only screen and (max-device-width: 480px) and (orientation:landscape) {
+	#map {
+		width: 50%;
+		float: left;
+		left: 0px;
+	}
+	#agenda {
+		width: 50%;
+		float:right;
+		padding-top:80px;
+	}
+}
