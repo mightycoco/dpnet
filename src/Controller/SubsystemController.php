@@ -16,10 +16,6 @@ use Cake\Core\Configure;
  */
 class SubsystemController extends AppController
 {
-	private $app_id = '1804210063129837';
-	private $app_secret = 'd1fdc93bb71b85affbad8095c6122b0f';
-	private $redirect_uri = 'https://mightycoco.pointcode.de/dpnet/subsystem/authenticate';
-
     /**
      * Index method
      *
@@ -77,14 +73,6 @@ class SubsystemController extends AppController
      */
     public function edit($id = null)
     {
-    }
-    
-    public function testFetchEvents() {
-    	$datasources = TableRegistry::get('Datasource');
-
-		$task = new SyncTask;
-		$eventsEdge = $task->execute($datasources->get("1")->source);
-		$this->set('events', $eventsEdge);
     }
     
     public function authenticate() {

@@ -6,6 +6,7 @@ use App\Shell\Task\SyncTask;
 use \DateTime;
 use Cake\Event\Event;
 use Cake\Routing\Router;
+use Cake\ORM\TableRegistry;
 
 /**
  * Events Controller
@@ -134,35 +135,69 @@ class EventsController extends AppController
 
         	preg_match('/\d+/', $uri, $id);
         	$id = $id[0];
-        	
+
         	try {
+        		// do we know about this event?
 	        	if($this->Events->findById($id)->first()) {
         			$stored = $this->Events->get($id);
 					$this->Flash->success(__('Thank you. This event "'.$stored->event_name.'" already exists and is in state "'.$stored->event_approval.'".'));
 				} else {
 		        	$task = (new SyncTask());
-		
-		        	$raw = $task
-							->getFacebook()
-							->get("/".$id, $task->getAccessToken())
-							->getGraphNode();
-							
-					$raw['datasource'] = 0;
-					$event = $this->Events->newEntity();
-					$event->fromRaw($raw);
-					$event->modified = new DateTime('now');
-		            $event->created = new DateTime('now');
-		            $event->event_approval = 'pending';
-		
-		            $cover = $task
-								->getFacebook()
-								->get("/".$id."/?fields=cover", $task->getAccessToken())
-								->getDecodedBody();
-					$event->cover = @$cover['cover']['source'];
-		
-		            $this->Events->save($event);
 
-					$this->Flash->success(__('Thank you. The event "'.$event->event_name.'" is going to be processed by our team and is currently "'.$event->event_approval.'".'));
+		    		// try to look up the parent page
+					$raw = $task
+						->getFacebook()
+						->get("/".$id."?fields=parent_group", $task->getAccessToken())
+						->getDecodedBody();
+
+					$process = true;
+
+					// does the event has a group/page as it's parent?
+					if(isset($raw['parent_group'])) {
+						$group_id = $raw['parent_group']['id'];
+
+						// do we already synchronize this group/page?
+						$datasource = TableRegistry::get('Datasource')->findBySource($group_id)->first();
+						if($datasource) {
+							// TODO: if the Datsource doesn't exist, we could add this as a new UNAPPROVED datasource
+
+							// look if we would find this requested event in the next sync run, as well
+							$raw = $task
+								->getFacebook()
+								->get("/".$group_id."/events?fields=id", $task->getAccessToken())
+								->getDecodedBody();
+							foreach($raw['data'] as $event_id) {
+								if($event_id['id'] == $id) {
+									$process = false;
+									$this->Flash->success(__('Thank you. This event from "'.$datasource->description.'" will be processed the next time we look up that page/group. Just be a little bit patient.'));
+								}
+							}
+						}
+					}
+		
+					if($process) {
+			        	$raw = $task
+								->getFacebook()
+								->get("/".$id, $task->getAccessToken())
+								->getGraphNode();
+								
+						$raw['datasource'] = 0;
+						$event = $this->Events->newEntity();
+						$event->fromRaw($raw);
+						$event->modified = new DateTime('now');
+			            $event->created = new DateTime('now');
+			            $event->event_approval = 'pending';
+			
+			            $cover = $task
+									->getFacebook()
+									->get("/".$id."/?fields=cover", $task->getAccessToken())
+									->getDecodedBody();
+						$event->cover = @$cover['cover']['source'];
+			
+			            $this->Events->save($event);
+	
+						$this->Flash->success(__('Thank you. The event "'.$event->event_name.'" is going to be processed by our team and is currently "'.$event->event_approval.'".'));
+					}
 		            
 		            $event_location = Router::fullbaseUrl().Router::url(['action' => 'edit', $id]);
 		            $pending_location = Router::fullbaseUrl().Router::url(['action' => 'index', 'event_approval' => 'pending']);
