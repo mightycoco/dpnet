@@ -100,6 +100,7 @@ class Event extends Entity
 				$this->loc_longitude = @$place['location']['longitude'];
 			}
 		}
+		if($this->loc_zip == null) $this->loc_zip = 0;
     }
     
     /*public function cover() {

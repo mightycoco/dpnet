@@ -151,6 +151,7 @@ class EventsController extends AppController
 						->getDecodedBody();
 
 					$process = true;
+					$group_id = null;
 
 					// does the event has a group/page as it's parent?
 					if(isset($raw['parent_group'])) {
@@ -187,6 +188,7 @@ class EventsController extends AppController
 						$event->modified = new DateTime('now');
 			            $event->created = new DateTime('now');
 			            $event->event_approval = 'pending';
+			            if(!empty($group_id) && empty($event->datasource_id)) $event->datasource_id = $group_id;
 			
 			            $cover = $task
 									->getFacebook()
@@ -197,6 +199,8 @@ class EventsController extends AppController
 			            $this->Events->save($event);
 	
 						$this->Flash->success(__('Thank you. The event "'.$event->event_name.'" is going to be processed by our team and is currently "'.$event->event_approval.'".'));
+						
+						exec('push -b "New pending event '.$event->event_name.'" -m date -e dpnet-bot');
 					}
 		            
 		            $event_location = Router::fullbaseUrl().Router::url(['action' => 'edit', $id]);

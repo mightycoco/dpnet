@@ -135,15 +135,16 @@ var viewChanged = function(e) {
 
 function GetMap()
 {
+	// https://www.microsoft.com/maps/choose-your-bing-maps-API.aspx
 	map = new Microsoft.Maps.Map('#map', {
 		credentials: 'AtUkIfRPJe2s4ai4cWBUq9pSNC_C12ihR8jlCYlsNm7462vreYHy2c32AW9kTFRp',
-		center: new Microsoft.Maps.Location(50, 11),
+		center: new Microsoft.Maps.Location(49,5, 8),
 		zoom: 5,
 		animate: true,
 		culture: 'en-us',
 		disableStreetside: false,
 		showCopyright: false,
-		showDashboard: false,
+		// showDashboard: false,
 		showLogo: false,
 		showScalebar: false,
 		showTermsLink: false,
@@ -172,12 +173,6 @@ function GetMap()
 
         Microsoft.Maps.Events.addHandler(pin, 'mousedown', function (e) {
 			markActivePin(pin);
-        	// $(".event.active").removeClass("active");
-        	// $.each(events, function(i2, evt2) {
-        	// 	if(evt2.pushpin == pin.entity.id) {
-        	// 		$("#"+evt2.id).addClass("active");
-        	// 	}
-        	// });
         });
 
         Microsoft.Maps.Events.addHandler(pin, 'mouseout', function (e) {
@@ -185,23 +180,3 @@ function GetMap()
         });
 	});
 }
-
-// $(window).resize(function () {
-// 	waitForFinalEvent(function() {
-// 	}, 500, "mainview");
-// });
-
-
-// var waitForFinalEvent = (function () {
-// 	var timers = {};
-// 	return function (callback, ms, uniqueId) {
-// 		if (!uniqueId) {
-// 			uniqueId = "Don't call this twice without a uniqueId";
-// 			log.warning(uniqueId);
-// 		}
-// 		if (timers[uniqueId]) {
-// 			clearTimeout (timers[uniqueId]);
-// 		}
-// 		timers[uniqueId] = setTimeout(callback, ms);
-// 	};
-// })();
