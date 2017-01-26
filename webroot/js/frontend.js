@@ -1,5 +1,7 @@
 var map = null;
 var old_map_pos = {};
+var svgNormal = '<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><circle cx="25" cy="25" r="10" stroke="black" stroke-width="1" fill="orange" /></svg>';
+var svgHover = '<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><circle cx="25" cy="25" r="15" stroke="black" stroke-width="1" fill="blue" /></svg>';
 
 // zoom to a rectangle from locations: http://stackoverflow.com/questions/7798024/how-to-zoom-a-bing-map-to-display-a-set-of-lat-long-points
 // or http://gis.stackexchange.com/questions/153594/zoom-to-fit-pushpins-in-bing-maps
@@ -8,12 +10,12 @@ $(function() {
 	$(document).on("click", ".event:not(.daysplit)", function(e) {
 		var pin = $(e.currentTarget).data("pin");
 		markActivePin(pin);
-		//$("#agenda").hide();
 		showEvent($(e.currentTarget).attr("id"));
 		old_map_pos.zoom = map.getZoom();
 		old_map_pos.center = map.getCenter();
 		map.setView({zoom:11, center:pin.getLocation(), animate: true});
 	});
+
 	$(document).on("keydown", "body", function(e) {
 		if(e.keyCode == 27) {
 			$("#close_event").trigger("click");
@@ -21,8 +23,8 @@ $(function() {
 	});
 	
 	$(document).on("click", "#close_event", function(e) {
-		//$("#agenda").show();
 		$("#event").hide();
+		$("body").removeClass("noscroll");
 		map.setView({zoom: old_map_pos.zoom, center: old_map_pos.center, animate: true});
 	});
 	
@@ -39,9 +41,18 @@ $(function() {
 			$("body").removeClass("sticky");
 		}
 	});
+	
+	// $(".event cover img").each(function(i,img) {
+	// 	var r = Math.random()*8000;
+	// 	window.setTimeout(function() {
+	// 		$(img).addClass("animate");
+	// 	}, r);
+	// });
 });
 
 var showVisibleEvents = function() {
+	if($("#event").is(":visible")) 
+		return;
 	var bounds = map.getBounds();
 	$(".event:not(.daysplit)").hide();
 	
@@ -87,10 +98,12 @@ var showEvent = function(id) {
 	$("etitle", el).text(event.event_name);
 	$("description", el).text(event.event_description);
 	$("img.cover", el).attr("src", event.cover);
+	$("body").addClass("noscroll");
 }
 
 var markActivePin = function(pin) {
 	$(".event.active").removeClass('active');
+	if(!pin) return;
 	
 	$.each(events, function(i,e) {
 		if(e.pushpin == pin.entity.id) {
@@ -100,10 +113,18 @@ var markActivePin = function(pin) {
 	});
 
 	$(".event:not(.daysplit)").each(function(i,e) {
-		$(e).data("pin").setOptions({ color: 'orange' });
+		$(e).data("pin").setOptions({ 
+			color: 'orange',
+			//anchor: new Microsoft.Maps.Point(25, 50),
+			//icon: svgNormal
+		});
 	});
 	
-	pin.setOptions({ color: '#2098D1' });
+	pin.setOptions({
+		color: '#2098D1',
+		//anchor: new Microsoft.Maps.Point(25, 25),
+		//icon: svgHover
+	});
 }
 
 var scrollIntoViewIfOutOfView = function(el) {
@@ -157,9 +178,11 @@ function GetMap()
 		var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(evt.loc_latitude, evt.loc_longitude), {
 	            //title: evt.event_name,
 	            //subTitle: evt.place_name,
-	            text: evt.place_name[0],
+	            //text: evt.place_name[0],
 	            data: i,
-	            color: 'orange'
+	            color: 'orange',
+				//anchor: new Microsoft.Maps.Point(25, 50),
+				//icon: svgNormal
 	        });
 	    map.entities.push(pin);
 	    

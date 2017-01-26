@@ -4,6 +4,8 @@ body {
 	font-family:segoe ui, arial, verdana,sans-serif;
 }
 
+.noscroll {overflow:hidden}
+
 .right {
     float: right;
     clear: both;
@@ -54,15 +56,56 @@ section {
 
 .event {
 	padding:5px;
-	margin:5px;
-	max-width:200px;
+	width:290px;
 	min-width:100px;
 	min-height:120px;
 	cursor:default;
+	overflow: hidden;
+}
+.event cover {
+	width: 100%;
+	min-height: 130px;
+    max-height: 130px;
+    overflow: hidden;
+    display: inline-block;
+}
+.event cover img {
+	width: 100%;
+}
+.event cover img.animate {
+	animation: 10s swipe infinite alternate cubic-bezier(0.65, 0.05, 0.36, 1);
+	animation-delay: calc(100% - 50px);
+}
+.event cover placeholder {
+	display: block;
+    height: 130px;
+    background: #222;
+}
+@keyframes swipe {
+  0% {   transform: translateY(0%) }
+  20% {  transform: translateY(0%) }
+  40% {  transform: translateY(-50%) }
+  60% {  transform: translateY(-50%) }
+  80% {  transform: translateY(0%) }
+  100% { transform: translateY(0%) }
 }
 .event name {
 	color:#fff;
 	font-size:1.2em;
+}
+.event.weekend:before {
+	content:"weekend";
+	font-size:0.7em;
+	font-weight:bold;
+	line-height:20px;
+	color:#333;
+	float:right;
+	text-align:center;
+	display:block;
+	transform: rotateZ(45deg) translate3d(20px, -13px, 0px);
+	background:rgba(255, 110, 0, 0.64);
+	width:80px;
+	height:20px;
 }
 .event.weekend {
 	background:#444;
@@ -80,10 +123,17 @@ section {
 	display:none
 }
 .event.active {
-	background: #2098D1;
+	background: #095579;
 }
 .event.active description {
 	display:block
+}
+.event time {
+	background: rgba(202, 122, 0, 0.74);
+    color: #fff;
+    padding: 5px;
+    display: inline-block;
+    position: absolute;
 }
 
 #event {

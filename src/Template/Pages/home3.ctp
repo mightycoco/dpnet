@@ -7,6 +7,7 @@
 	<meta name="description" content="dark-party.net - the darker party network"/>
 	<?= $this->Html->css('reset.css') ?>
 	<?= $this->Html->css('frontend.css') ?>
+	<link href="//ianlunn.github.io/Hover/css/hover.css" rel="stylesheet" media="all">
     <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU" crossorigin="anonymous">
 </head>
 <body>
@@ -37,16 +38,27 @@
 	</section>
 	
 	<section id='agenda'>
+		<?php $prev_date = ''; ?>
 		<?php foreach ($events as $event): ?>
-		<?php
-			$time = $event->event_start->format('D, d/m/Y H:i\h');
-			if($event->event_start->isToday()) $time = 'Today '.$event->event_start->format('H:i\h');
-			else if($event->event_start->isTomorrow()) $time = 'Tomorrow '.$event->event_start->format('H:i\h');
-			else if($event->event_start->isThisWeek()) $time = $event->event_start->format('l H:i\h');
+		<?php 
+			$this_date = $event->event_start->format('l d/m/Y');
+			if($event->event_start->format('d/m/Y') == (new DateTime('NOW'))->format('d/m/Y')) {
+				$this_date = 'Today';
+			}
+			if($event->event_start->format('d/m/Y') == (new DateTime('NOW'))->modify('+1 day')->format('d/m/Y')) {
+				$this_date = 'Tomorrow';
+			}
+			if($prev_date != $this_date) {
+				$prev_date = $this_date;
 		?>
-        <div id='<?= $event->id ?>' class='event <?= in_array($event->event_start->format('N'), [5,6], false) ? "weekend" : ""  ?> hvr-sweep-to-bottom' index='1'>
-        	<time><?=$time?></time>
-        	<cover><?php if($event->cover): ?><img src='<?=$event->cover?>'/><?php else: ?><placeholder></placeholder><?php endif; ?></cover>
+		<div class='event daysplit'>
+			<name><?= $prev_date ?></name>
+		</div>
+		<?php
+			}
+		?>
+        <div id='<?= $event->id ?>' class='event <?= in_array($event->event_start->format('N'), [5,6,7], false) ? "weekend" : ""  ?> hvr-sweep-to-bottom' index='1'>
+        	<time><?= $event->event_start->format('D, d/m/Y H:i\h') ?></time>
         	<name><!--<a href='https://facebook.com/<?= $event->id ?>' target='fb'>--><?= $event->event_name ?><!--</a>--></name>
         	<place><?= $event->place_name ?></place>
         	<!--<a href="https://www.google.com/maps?q=<?= $event->loc_latitude ?>,<?= $event->loc_longitude ?>" target="gmaps">-->
