@@ -177,6 +177,8 @@ class ConsoleShell extends Shell
 
 				$entity = $eventsTable->newEntity();
 				$entity->fromRaw($event);
+				$entity->modified = new DateTime('now');
+	            $entity->created = new DateTime('now');
 				
 				$weight = $entity->getWeight();
 				
