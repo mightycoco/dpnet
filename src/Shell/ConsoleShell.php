@@ -164,6 +164,8 @@ class ConsoleShell extends Shell
 		$pendingAdded = 0;
 		$approvedAdded = 0;
 		$rejectedAdded = 0;
+		
+		echo $datasource->reject_zero_weight;
     	
 		foreach($events as $event) {
 			if($event['start_time']->getTimestamp() > time()
@@ -182,7 +184,7 @@ class ConsoleShell extends Shell
 				$task = (new SyncTask());
 				$cover = $task
 							->getFacebook()
-							->get("/".$this->id."/?fields=cover", $task->getAccessToken())
+							->get("/".$entity->id."/?fields=cover", $task->getAccessToken())
 							->getDecodedBody();
 				$entity->cover = @$cover['cover']['source'];
 
@@ -200,7 +202,7 @@ class ConsoleShell extends Shell
 					}
 				}
 				
-				if($event->reject_zero_weight && $weight <= 0) {
+				if($datasource->reject_zero_weight == true && $weight <= 0) {
 					$approval = 'rejected';
 					$rejectedAdded++;
 				}
@@ -217,6 +219,8 @@ class ConsoleShell extends Shell
 				}
 			}
 		}
+		
+		$this->out('-> '.$pendingAdded.' pending, '.$approvedAdded.' approved, '.$rejectedAdded.' rejected');
 
 		if($pendingAdded + $approvedAdded + $rejectedAdded > 0) {
 			exec('push -b "New events in '.$ds['description'].' ('.$pendingAdded.' pending, '.$approvedAdded.' approved, '.$rejectedAdded.' rejected)" -m date -e dpnet-bot');
