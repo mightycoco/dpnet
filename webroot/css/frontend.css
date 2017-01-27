@@ -13,14 +13,14 @@ body {
 
 header, footer {
     padding: 0px 15px;
-    background: #356;
+    background: #333;
     min-height: 40px;
 }
 header {
-	height: 80px;
-	line-height: 80px;
-	font-size: 2em;
-	color: #89a;
+	font-family: segoe ui light, arial, verdana,sans-serif;
+	line-height: 40px;
+	font-size: 1.4em;
+	color: #999;
 	position: fixed;
 	width: 100%;
 	z-index: 2;
@@ -28,7 +28,9 @@ header {
 
 footer {
 	color: #999;
+    background: #000;
 	padding: 15px;
+	margin-top: 50px;
 }
 
 section {
@@ -36,15 +38,24 @@ section {
 	margin:auto auto;
 }
 
+.map_background {
+	background: #000;
+	position: fixed;
+	width: 100%;
+	height: 300px;
+	top: 40px;
+	z-index: 1;
+}
+
 #map {
-   position: fixed !important;
-   max-width: 900px;
-   width: 100%;
-   height: 300px;
-   background: #ddd;
-   z-index: 1;
-   top: 80px;
-   left: calc(50% - 450px);
+	position: fixed !important;
+	max-width: 900px;
+	width: 100%;
+	height: 300px;
+	background: #ddd;
+	z-index: 2;
+	top: 40px;
+	left: calc(50% - 450px);
 }
 
 #agenda {
@@ -93,7 +104,7 @@ section {
 	color:#fff;
 	font-size:1.2em;
 }
-.event.weekend:before {
+/*.event.weekend:after {
 	content:"weekend";
 	font-size:0.7em;
 	font-weight:bold;
@@ -106,7 +117,7 @@ section {
 	background:rgba(255, 110, 0, 0.64);
 	width:80px;
 	height:20px;
-}
+}*/
 .event.weekend {
 	background:#444;
 }
@@ -138,17 +149,30 @@ section {
 
 #event {
 	display: none;
-	height: 400px;
-	z-index: 100;
+    max-height: 500px;
+    z-index: 100;
+    position: fixed;
+    background: #000;
+    max-width: 900px;
+    width: 100%;
+    overflow-y: auto;
+    left: calc(50% - 450px);
+    top: 340px;
+}
+
+#event h1 {
 	position: fixed;
-	background: #000;
-	box-shadow: 0px 0px 30px 30px #333;
-	outline: 1px solid #666;
-	max-width: 900px;
+	margin: -10px;
 	width: 100%;
-	overflow-y: auto;
-	left: calc(50% - 450px);
-	top: 400px;
+	background: #333;
+}
+
+#event .cover {
+	padding-top: 30px;
+}
+
+#close_event {
+	padding: 5px;
 }
 
 #event article {
@@ -195,7 +219,6 @@ section {
 }
 @media only screen and (max-device-width: 480px) {
 	body {
-		zoom: 1.5;
 		-webkit-touch-callout: none; /* iOS Safari */
 		  -webkit-user-select: none; /* Chrome/Safari/Opera */
 		   -khtml-user-select: none; /* Konqueror */
@@ -204,16 +227,19 @@ section {
 		          user-select: none; /* Non-prefixed version, currently
 		                                not supported by any browser */
 	}
-/*	.event {
-		max-width: 50%;
-		min-width: 50%;
-		margin: 0px;
-		box-sizing: border-box;
-		min-height: 300px;
-	}*/
 	#agenda, #map, #event {
 		max-width: 100%;
 		left: 0px !important;
+	}
+	#map, .map_background {
+		height: 200px;
+	}
+	#agenda {
+		padding-top: 240px;
+	}
+	#event {
+		top: 240px;
+		max-height: 400px;
 	}
 	.fa {
 		font-size: 2em !important;

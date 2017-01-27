@@ -5,6 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="author" content="ascii">
 	<meta name="description" content="dark-party.net - the darker party network"/>
+	<meta id="meta" name="viewport" content="width=device-width; initial-scale=1.0" />
 	<?= $this->Html->css('reset.css') ?>
 	<?= $this->Html->css('frontend.css') ?>
     <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU" crossorigin="anonymous">
@@ -25,12 +26,14 @@
 		}
 	?>
 	
+	<div class='map_background'>
 	<section id='map'>
 	</section>
+	</div>
 	
 	<section id='event'>
 		<article>
-			<h1><etitle></etitle> <span class='fa fa-times-circle right' id='close_event'></span></h1>
+			<h1><span class='fa fa-chevron-left' id='close_event'></span><etitle></etitle></h1>
 			<img class='cover'/>
 			<description></description>
 		</article>
