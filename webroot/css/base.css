@@ -481,3 +481,22 @@ button.more {background:#61b6d9;margin:0px;white-space:nowrap;padding:10px 10px;
 .view-item .created {}
 .view-item .content {margin:0px;background:#f9f9f9;outline:1px solid #999;clear:both;width:100%;}
 .view-item .actions {float:right;}
+
+widgets {
+	display: flex;
+	padding: 10px;
+}
+widget {
+	border: 1px solid #999;
+	max-width: 500px;
+	display: inline-block;
+	padding: 10px;
+	margin: 10px;
+	border-radius: 3px;
+}
+widget button {
+	padding: 0.5em;
+}
+widget label {
+	display: none;
+}

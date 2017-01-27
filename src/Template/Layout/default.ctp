@@ -43,6 +43,7 @@ $cakeDescription = 'dark-party.net - administration';
 	<nav class="top-bar expanded" data-topbar role="navigation">
 		<div class="top-bar-section">
 			<ul>
+				<li><?= $this->Html->link(__("Dashboard"), ['controller'=>'dashboard', 'action' => 'index'], ['class'=>'fa fa-list']) ?></li>
 				<li><?= $this->Html->link(__("Datasource"), ['controller'=>'datasource', 'action' => 'index'], ['class'=>'fa fa-list']) ?></li>
 				<li><?= $this->Html->link(__("Users"), ['controller'=>'users', 'action' => 'index'], ['class'=>'fa fa-user']) ?></li>
 				<li><?= $this->Html->link(__("Subsystem"), ['controller'=>'subsystem', 'action' => 'index'], ['class'=>'fa fa-edit']) ?></li>
