@@ -10,4 +10,18 @@
 	])?>
 	<?=$this->cell('Events::uriForm')?>
 	</table>
+	
+	<h5>Events created per day</h5>
+	<?= $usage_created[0]['date'] ?> to <?= $usage_created[sizeof($usage_created)-1]['date'] ?>
+	<div class='bars'>
+		<?php foreach ($usage_created as $use): ?>
+			<bar title='<?=$use['date']?>'>
+				<text>
+					<?=$use['sum']?>
+				</text>
+				<thumb style='height:<?=100/$sum*$use['sum']?>px'></thumb>
+			</bar>
+			<br/>
+		<?php endforeach; ?>
+	</div>
 </widget>

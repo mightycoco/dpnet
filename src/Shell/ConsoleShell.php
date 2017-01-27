@@ -226,6 +226,7 @@ class ConsoleShell extends Shell
 
 		//if($pendingAdded + $approvedAdded + $rejectedAdded > 0) {
 		if($pendingAdded > 0) {
+			// TODO: must make a task class with settings in config/app.php
 			exec('push -b "New events in '.$ds['description'].' ('.$pendingAdded.' pending, '.$approvedAdded.' approved, '.$rejectedAdded.' rejected)" -m date -e dpnet-bot');
 		}
     }

@@ -200,6 +200,7 @@ class EventsController extends AppController
 	
 						$this->Flash->success(__('Thank you. The event "'.$event->event_name.'" is going to be processed by our team and is currently "'.$event->event_approval.'".'));
 						
+						// TODO: must make a task class with settings in config/app.php
 						exec('push -b "New pending event '.$event->event_name.'" -m date -e dpnet-bot');
 					}
 		            
