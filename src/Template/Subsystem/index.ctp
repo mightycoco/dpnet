@@ -2,7 +2,6 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('Authenticate'), ['action' => 'authenticate']) ?></li>
-        <li><?= $this->Html->link(__('Test Fetch'), ['action' => 'test_fetch_events']) ?></li>
     </ul>
 </nav>
 <div class="users index large-9 medium-8 columns content">
