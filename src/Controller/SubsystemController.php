@@ -6,7 +6,6 @@ use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use App\Shell\Task\SyncTask;
 use App\Model\Table\DatasourceTable;
-use App\Shell\Task\SyncTask;
 use Cake\Core\Configure;
 
 /**
