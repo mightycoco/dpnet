@@ -224,7 +224,8 @@ class ConsoleShell extends Shell
 		
 		$this->out('-> '.$pendingAdded.' pending, '.$approvedAdded.' approved, '.$rejectedAdded.' rejected');
 
-		if($pendingAdded + $approvedAdded + $rejectedAdded > 0) {
+		//if($pendingAdded + $approvedAdded + $rejectedAdded > 0) {
+		if($pendingAdded > 0) {
 			exec('push -b "New events in '.$ds['description'].' ('.$pendingAdded.' pending, '.$approvedAdded.' approved, '.$rejectedAdded.' rejected)" -m date -e dpnet-bot');
 		}
     }
