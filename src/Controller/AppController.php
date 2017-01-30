@@ -58,9 +58,8 @@ class AppController extends Controller
 			],
 			'storage' => 'Session',
 			'loginRedirect' => [
-				'controller' => 'Events',
-				'action' => 'index',
-				'event_approval' => 'pending'
+				'controller' => 'Dashboard',
+				'action' => 'index'
 			],
 			'logoutRedirect' => [
 				'controller' => 'Pages'
