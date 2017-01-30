@@ -16,6 +16,20 @@ return [
 		'secret' => '',
 		'redirect_url' => ''
 	],
+	
+	/**
+	 * Configure the endpoints for each aslack incoming webhook channel
+	 * 
+	 * The format is Slack->incomingHook->CHANEL_NAME->uri
+	 * 
+	 */
+	'Slack' => [
+		'incomingHook' => [
+			'notifications' => [
+				'uri' => 'https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX'
+			]
+		]
+	],
 
     /**
      * Configure basic information about the application.
