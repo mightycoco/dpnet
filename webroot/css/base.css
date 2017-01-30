@@ -485,17 +485,21 @@ button.more {background:#61b6d9;margin:0px;white-space:nowrap;padding:10px 10px;
 widgets {
 	display: flex;
 	padding: 10px;
+	align-items: stretch;
+	flex-wrap: wrap;
 }
 widget {
 	border: 1px solid #999;
 	max-width: 500px;
+	min-width: 200px;
 	display: inline-block;
 	padding: 10px;
 	margin: 10px;
 	border-radius: 3px;
 }
-widget button {
+widget button, widget .button {
 	padding: 0.5em;
+	margin: 0px;
 }
 widget label {
 	display: none;
@@ -524,4 +528,11 @@ widget label {
 .bars bar text {
     position: absolute;
     display: block;
+}
+.bars bar text .sum {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.bars bar text .date {
+    font-size: 0.7em;
 }
