@@ -19,7 +19,7 @@
             echo $this->Form->input('datasource_id', ['type'=>'text']);
             echo $this->Form->input('event_description');
             echo $this->Form->input('event_name');
-            echo $this->Form->input('event_approval', ['type'=>'select', 'options'=>['pending','approved','rejected']]);
+            echo $this->Form->input('event_approval', ['type'=>'select', 'options'=>['pending'=>'pending','approved'=>'approved','rejected'=>'rejected']]);
             echo $this->Form->input('event_start', ['empty' => true]);
             echo $this->Form->input('event_end', ['empty' => true]);
             echo $this->Form->input('place_id');
