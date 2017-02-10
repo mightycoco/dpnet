@@ -1,260 +1,159 @@
+html {
+	height: 100%;
+}
 body {
-	background:#333;
+	background:black;
 	color:#999;
 	font-family:segoe ui, arial, verdana,sans-serif;
+	height: 100%;
 }
 
-.noscroll {overflow:hidden}
-
-.right {
-    float: right;
-    clear: both;
+.noscroll {
+    overflow-y: hidden;
 }
 
-header, footer {
-    padding: 0px 15px;
-    background: #333;
-    min-height: 40px;
+a {
+	text-decoration: none;
 }
+a:hover {
+	color: orange;
+}
+
 header {
-	font-family: segoe ui light, arial, verdana,sans-serif;
-	line-height: 40px;
-	font-size: 1.4em;
-	color: #999;
-	position: fixed;
-	width: 100%;
-	z-index: 2;
+	background: #333;
+	font-size:1.5em;
+	padding: 5px;
+	height: 35px;
 }
-
 footer {
-	color: #999;
-    background: #000;
-	padding: 15px;
-	margin-top: 50px;
+	background: #333;
+	border-top: 5px solid black;
+	padding: 5px;
+	height: 25px;
 }
 
-section {
+content {
+	background: #333;
+	display: block;
+}
+
+margin {
 	max-width:900px;
-	margin:auto auto;
+	margin: auto auto;
+	display: block;
 }
 
-.map_background {
-	background: #000;
-	position: fixed;
-	width: 100%;
-	height: 300px;
-	top: 40px;
-	z-index: 1;
-}
-
-#map {
-	position: fixed !important;
-	max-width: 900px;
-	width: 100%;
-	height: 300px;
-	background: #ddd;
-	z-index: 2;
-	top: 40px;
-	left: calc(50% - 450px);
+gray {
+	background: #333;
+	display: block;
+	/*min-height: calc(100% - 380px);*/
+	min-height: calc(100% - 145px);
 }
 
 #agenda {
-	align-items:stretch;
+	min-height: 200px;
 	display: flex;
-	flex-wrap: wrap;
-	padding-top: 380px;
+	flex-flow: row wrap;
+	background: #333;
+}
+#map {
+	background: black;
+	height: 300px;
 }
 
-.event {
-	padding:5px;
-	width:290px;
-	min-width:100px;
-	min-height:120px;
-	cursor:default;
-	overflow: hidden;
+.event_item {
+	flex: 0 1 33%;
 }
-.event cover {
-	width: 100%;
-	min-height: 130px;
-    max-height: 130px;
-    overflow: hidden;
-    display: inline-block;
-}
-.event cover img {
-	width: 100%;
-}
-.event cover img.animate {
-	animation: 10s swipe infinite alternate cubic-bezier(0.65, 0.05, 0.36, 1);
-	animation-delay: calc(100% - 50px);
-}
-.event cover placeholder {
+
+.event_item info {
+	padding: 5px;
 	display: block;
-    height: 130px;
-    background: #222;
 }
-@keyframes swipe {
-  0% {   transform: translateY(0%) }
-  20% {  transform: translateY(0%) }
-  40% {  transform: translateY(-50%) }
-  60% {  transform: translateY(-50%) }
-  80% {  transform: translateY(0%) }
-  100% { transform: translateY(0%) }
-}
-.event name {
+
+.event_item name {
 	color:#fff;
-	font-size:1.2em;
 }
-/*.event.weekend:after {
-	content:"weekend";
-	font-size:0.7em;
-	font-weight:bold;
-	line-height:20px;
-	color:#333;
-	float:right;
-	text-align:center;
-	display:block;
-	transform: rotateZ(45deg) translate3d(20px, -13px, 0px);
-	background:rgba(255, 110, 0, 0.64);
-	width:80px;
-	height:20px;
-}*/
-.event.weekend {
-	background:#444;
+
+.event_item cover {
+    max-height: 120px;
+    overflow: hidden;
+    display: block;
 }
-.event.daysplit {
-	background:#a25d04;width:100px;
+
+.event_item cover img {
+	width: 100%;
 }
-.event.daysplit name {
-	transform: rotate(270deg);
-	display: inline-block;
-	transform-origin: 54px 50px;
-	font-size: 1.2em;
-}
-.event description {
-	display:none
-}
-.event.active {
-	background: #095579;
-}
-.event.active description {
-	display:block
-}
-.event time {
-	background: rgba(202, 122, 0, 0.74);
-    color: #fff;
-    padding: 5px;
-    display: inline-block;
+
+.event_item time {
+    background: rgba(0, 0, 0, 0.46);
     position: absolute;
+    padding: 5px;
+    color: #fff;
+}
+
+.event_item.weekend time {
+    background: rgba(138, 46, 0, 0.8);
 }
 
 #event {
-	display: none;
-    max-height: 500px;
-    z-index: 100;
-    position: fixed;
     background: #000;
-    max-width: 900px;
+    color: #fff;
+    display: none;
+    min-height: 300px;
+    position: fixed;
     width: 100%;
-    overflow-y: auto;
+    height: calc(100% - 350px);
+    overflow: auto;
+    z-index: 1;
+    max-width: 900px;
     left: calc(50% - 450px);
-    top: 340px;
 }
-
-#event h1 {
-	position: fixed;
-	margin: -10px;
-	width: 100%;
-	background: #333;
-}
-
 #event .cover {
-	padding-top: 30px;
+	display: block;
+	width: 100%;
 }
-
+#event description {
+    padding: 20px;
+    display: block;
+    white-space: pre-wrap;
+}
 #close_event {
 	padding: 5px;
 }
-
-#event article {
-	margin: 5px;
-	padding: 5px;
+#close_event:hover {
+	color: orange;
+}
+#event links {
+    padding: 20px;
+    display: block;
+}
+#event h1 {
+	font-size: 1.4em;
+}
+.fa.fa-facebook-square {
+    color: #8cb7ff;
 }
 
-#event description {
-	white-space: pre-wrap; 
-}
-
-#event #close_event:hover {
-    color: #fff;
-}
-
-/* the sticky part becomes active after scrolling down > 40px */
-/*.sticky header {
-	height: 40px;
-	top: 0px;
-	line-height: 40px;
-	font-size: 1em;
-	position: fixed;
-	width: 100%;
-	z-index: 10;
-}
-
-.sticky #map {
-	position: fixed !important;
-	top: 40px;
-	left: calc(50% - 450px);
-	z-index: 10;
-}
-
-.sticky #agenda {
-	margin-top: 240px;
-	background: #333;
-}*/
-
-@media screen and (max-width: 900px) {
-	#agenda, #map, #event {
-		max-width: 100%;
-		left: 0px !important;
-	}
-}
-@media only screen and (max-device-width: 480px) {
-	body {
-		-webkit-touch-callout: none; /* iOS Safari */
-		  -webkit-user-select: none; /* Chrome/Safari/Opera */
-		   -khtml-user-select: none; /* Konqueror */
-		     -moz-user-select: none; /* Firefox */
-		      -ms-user-select: none; /* Internet Explorer/Edge */
-		          user-select: none; /* Non-prefixed version, currently
-		                                not supported by any browser */
-	}
-	#agenda, #map, #event {
-		max-width: 100%;
-		left: 0px !important;
-	}
-	#map, .map_background {
+@media screen and (max-height: 400px) {
+	#map {
 		height: 200px;
 	}
-	#agenda {
-		padding-top: 240px;
-	}
-	#event {
-		top: 240px;
-		max-height: 400px;
-	}
-	.fa {
-		font-size: 2em !important;
+}
+
+@media screen and (max-width: 760px) {
+	.event_item {
+		flex: 0 1 50%;
 	}
 }
 
-@media only screen and (max-device-width: 480px) and (orientation:landscape) {
-	#map {
-		width: 50%;
-		float: left;
-		left: 0px;
+@media screen and (max-width: 900px) {
+	#event {
+	    left: 0px;
 	}
-	#agenda {
-		width: 50%;
-		float:right;
-		padding-top:80px;
+}
+
+@media only screen and (max-width: 640px) {
+	.event_item {
+		flex: 0 1 100%;
 	}
 }

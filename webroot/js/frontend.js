@@ -7,13 +7,13 @@ var svgHover = '<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><
 // or http://gis.stackexchange.com/questions/153594/zoom-to-fit-pushpins-in-bing-maps
 
 $(function() {
-	$(document).on("click", ".event:not(.daysplit)", function(e) {
+	$(document).on("click", ".event_item:not(.daysplit)", function(e) {
 		var pin = $(e.currentTarget).data("pin");
 		markActivePin(pin);
 		showEvent($(e.currentTarget).attr("id"));
 		old_map_pos.zoom = map.getZoom();
 		old_map_pos.center = map.getCenter();
-		map.setView({zoom:11, center:pin.getLocation(), animate: true});
+		map.setView({zoom:11, center:pin.getLocation()});
 	});
 
 	$(document).on("keydown", "body", function(e) {
@@ -25,10 +25,10 @@ $(function() {
 	$(document).on("click", "#close_event", function(e) {
 		$("#event").hide();
 		$("body").removeClass("noscroll");
-		map.setView({zoom: old_map_pos.zoom, center: old_map_pos.center, animate: true});
+		map.setView({zoom: old_map_pos.zoom, center: old_map_pos.center});
 	});
 	
-	$(document).on("mouseover", ".event:not(.daysplit)", function(e) {
+	$(document).on("mouseover", ".event_item:not(.daysplit)", function(e) {
 		markActivePin($(e.currentTarget).data("pin"));
 	});
 	
@@ -42,7 +42,7 @@ $(function() {
 		}
 	});
 	
-	// $(".event cover img").each(function(i,img) {
+	// $(".event_item cover img").each(function(i,img) {
 	// 	var r = Math.random()*8000;
 	// 	window.setTimeout(function() {
 	// 		$(img).addClass("animate");
@@ -54,11 +54,11 @@ var showVisibleEvents = function() {
 	if($("#event").is(":visible")) 
 		return;
 	var bounds = map.getBounds();
-	$(".event:not(.daysplit)").hide();
+	$(".event_item:not(.daysplit)").hide();
 	
 	$.each(map.getV8Map().getLayers()[0].getPrimitives(), function(i,p) {
 		if(bounds.contains(p.getLocation())) {
-			$(".event:not(.daysplit)").each(function(i, e) {
+			$(".event_item:not(.daysplit)").each(function(i, e) {
 				if(p.entity.id == $(e).data().pin.entity.id) {
 					$(e).show();
 				}
@@ -67,42 +67,21 @@ var showVisibleEvents = function() {
 	});
 }
 
-/*
-{
-	"id":"553650001491609",
-	"datasource_id":"120052948051316",
-	"event_description":"long description",
-	"event_name":"19.1.17 // Düsterdisco // Eisenlager // feat Dj Alexx Botox",
-	"event_approval":"approved",
-	"event_start":"2017-01-19T20:00:00+00:00",
-	"event_end":"2017-01-20T04:15:00+00:00",
-	"place_id":2147483647,
-	"place_name":"Düsterdisco im Eisenlager Zentrum Altenberg",
-	"loc_city":"Oberhausen",
-	"loc_country":"Germany",
-	"loc_street":"Hansastr. 20",
-	"loc_zip":"46049",
-	"loc_latitude":51.4752,
-	"loc_longitude":6.84733,
-	"created":null,
-	"modified":null,
-	"pushpin":"Pushpin_2"
-}
-*/
-
 var showEvent = function(id) {
 	$("#event").show();
 	
 	var event = $.grep(events, function(e) {return e.id == id})[0];
-	var el = $("#event article");
-	$("etitle", el).text(event.event_name);
+	var el = $("#event");
+	el.data("event", event);
+	$("name", el).text(event.event_name);
 	$("description", el).text(event.event_description);
 	$("img.cover", el).attr("src", event.cover);
+	$(".extern-facebook").attr("href", "https://facebook.com/" + event.id);
 	$("body").addClass("noscroll");
 }
 
 var markActivePin = function(pin) {
-	$(".event.active").removeClass('active');
+	$(".event_item.active").removeClass('active');
 	if(!pin) return;
 	
 	$.each(events, function(i,e) {
@@ -112,7 +91,7 @@ var markActivePin = function(pin) {
 		}
 	});
 
-	$(".event:not(.daysplit)").each(function(i,e) {
+	$(".event_item:not(.daysplit)").each(function(i,e) {
 		$(e).data("pin").setOptions({ 
 			color: 'orange',
 			//anchor: new Microsoft.Maps.Point(25, 50),
@@ -160,8 +139,8 @@ function GetMap()
 	map = new Microsoft.Maps.Map('#map', {
 		credentials: 'AtUkIfRPJe2s4ai4cWBUq9pSNC_C12ihR8jlCYlsNm7462vreYHy2c32AW9kTFRp',
 		center: new Microsoft.Maps.Location(49,5, 8),
+		navigationBarMode: Microsoft.Maps.NavigationBarMode.default,
 		zoom: 5,
-		animate: true,
 		culture: 'en-us',
 		disableStreetside: false,
 		showCopyright: false,
@@ -172,7 +151,21 @@ function GetMap()
 		showZoomButtons: false
 	});
 	
-	Microsoft.Maps.Events.addHandler(map, 'viewchangeend', viewChanged);
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+        	var location = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
+        	map.setView({zoom: 11, center: location});
+        	
+        	var pin = new Microsoft.Maps.Pushpin(location, {
+	            color: 'red'
+	        });
+	    	map.entities.push(pin);
+        });
+    }
+	
+	// Microsoft.Maps.Events.addHandler(map, 'viewchangeend', viewChanged);
+	
+	Microsoft.Maps.Events.addThrottledHandler(map, 'viewchangeend', viewChanged, 2000);
 	
 	$.each(events, function(i, evt) {
 		var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(evt.loc_latitude, evt.loc_longitude), {
@@ -190,16 +183,39 @@ function GetMap()
 	    
 	    evt.pushpin = pin.entity.id;
 	    
-	    Microsoft.Maps.Events.addHandler(pin, 'mouseover', function (e) {
+	    //Microsoft.Maps.Events.addHandler(pin, 'mouseover', function (e) {
+	    Microsoft.Maps.Events.addThrottledHandler(pin, 'mouseover', function (e) {
             //e.target.setOptions({ color: '#2098D1' });
-        });
+        }, 1000);
 
-        Microsoft.Maps.Events.addHandler(pin, 'mousedown', function (e) {
+        //Microsoft.Maps.Events.addHandler(pin, 'mousedown', function (e) {
+        Microsoft.Maps.Events.addThrottledHandler(pin, 'mousedown', function (e) {
 			markActivePin(pin);
-        });
+        }, 1000);
 
-        Microsoft.Maps.Events.addHandler(pin, 'mouseout', function (e) {
+        //Microsoft.Maps.Events.addHandler(pin, 'mouseout', function (e) {
+        Microsoft.Maps.Events.addThrottledHandler(pin, 'mouseout', function (e) {
             e.target.setOptions({ color: 'orange' });
-        });
+        }, 1000);
+	});
+	
+	$(".intern-ics").on("click", function(e) {
+		e.preventDefault();
+		
+		var event = $("#event").data("event");
+		var start = event.event_start;
+	    var end = event.event_end ? event.event_end : "";
+	    var location = event.loc_street + ", " + event.loc_city + " (" + event.loc_country + ")";
+	    var subject = event.event_name;
+	    var url = " http://facebook.com/" + event.id;
+	    var description = event.place_name + url;
+	    if(start) start = start.replace(/[-:]/ig, "").replace(/\+0000/ig, "");
+	    if(end) end = end.replace(/[-:]/ig, "").replace(/\+0000/ig, "");
+	
+	    var icsMSG = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//dark-party.net//NONSGML v1.0//EN\nBEGIN:VEVENT\nUID:"+event.id+"\nDTSTAMP:20120315T170000Z\nDTSTART:" + start +"\nDTEND:" + end +"\nLOCATION:" + location + "\nURL:"+url+"\nSUMMARY:" + subject + "\nDESCRIPTION:" + description + "\nEND:VEVENT\nEND:VCALENDAR";
+	
+	    window.open( "data:text/calendar;charset=utf8," + escape(icsMSG));
+	    
+		return false;	
 	});
 }

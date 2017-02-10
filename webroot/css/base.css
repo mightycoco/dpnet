@@ -504,11 +504,45 @@ widget button, widget .button {
 widget label {
 	display: none;
 }
+widget input {
+	margin: 0px !important;
+}
+widget table tr:hover {
+	background:#e1e8c6;
+}
+
+table.dense td {
+	padding:0px;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
 .bars {
 	display: flex;
 	align-items: flex-end;
 	width: 100%;
 	height: 100px;
+}
+widget table td:last-child {
+    text-align: right;
+}
+.dashboard-datasources td {
+	text-align: left !important;
+}
+.dashboard-datasources td:nth-child(2),
+.dashboard-datasources td:nth-child(3),
+.dashboard-datasources td:nth-child(4),
+.dashboard-datasources td:nth-child(5),
+.dashboard-datasources th:nth-child(2),
+.dashboard-datasources th:nth-child(3),
+.dashboard-datasources th:nth-child(4),
+.dashboard-datasources th:nth-child(5){
+	width: 50px;
+}
+vscroll300 {
+    max-height: 300px;
+    overflow: auto;
+    display: inline-block;
 }
 .bars bar {
 	flex-grow: 1;
