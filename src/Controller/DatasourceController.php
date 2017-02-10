@@ -69,8 +69,7 @@ class DatasourceController extends AppController
 			$access_token = $fbc->getAccessToken();
 			$fb = $fbc->getFacebook();
 			$response = $fb->get("/$tag", $access_token);
-			
-			
+
 			$type = "page";
 			$source = $response->getDecodedBody()['id'];
 			$description = $response->getDecodedBody()['name'];
