@@ -73,9 +73,14 @@ var showEvent = function(id) {
 	var event = $.grep(events, function(e) {return e.id == id})[0];
 	var el = $("#event");
 	el.data("event", event);
+	
+	var date = new Date(event.event_start);
+	
 	$("name", el).text(event.event_name);
 	$("description", el).text(event.event_description);
 	$("img.cover", el).attr("src", event.cover);
+	$("date").html(date.toDateString());
+	$("time").html(date.toTimeString().substr(0, 5));
 	$(".extern-facebook").attr("href", "https://facebook.com/" + event.id);
 	$("body").addClass("noscroll");
 }
@@ -131,6 +136,17 @@ var scrollIntoViewIfOutOfView = function(el) {
 
 var viewChanged = function(e) {
 	showVisibleEvents();
+}
+
+function entityFromPin(pin) {
+	var entity = null;
+	$.each(events, function(i,e) {
+		if(e.pushpin == pin.entity.id) {
+			entity = e;
+			return false;
+		}
+	});
+	return entity;
 }
 
 function GetMap()
@@ -191,6 +207,7 @@ function GetMap()
         //Microsoft.Maps.Events.addHandler(pin, 'mousedown', function (e) {
         Microsoft.Maps.Events.addThrottledHandler(pin, 'mousedown', function (e) {
 			markActivePin(pin);
+			showEvent(entityFromPin(pin).id);
         }, 1000);
 
         //Microsoft.Maps.Events.addHandler(pin, 'mouseout', function (e) {

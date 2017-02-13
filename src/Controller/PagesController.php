@@ -82,7 +82,7 @@ class PagesController extends AppController
         $this->set('_serialize', ['events']);
 
         try {
-        	$this->viewBuilder()->layout("");
+        	$this->viewBuilder()->layout("frontend");
             $this->render(implode('/', $path));
         } catch (MissingTemplateException $e) {
             if (Configure::read('debug')) {

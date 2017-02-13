@@ -23,13 +23,27 @@ header {
 	background: #333;
 	font-size:1.5em;
 	padding: 5px;
-	height: 35px;
+	height: 27px;
 }
 footer {
 	background: #333;
 	border-top: 5px solid black;
 	padding: 5px;
 	height: 25px;
+}
+
+header a {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+header a .text {
+    font-size: 3em;
+    margin-top: -33px;
+    display: inline-block;
+    font-weight: bold;
+    color: #000;
+    text-shadow: 0px 0px 8px #999;
 }
 
 content {
@@ -62,9 +76,15 @@ gray {
 }
 
 .event_item {
-	flex: 0 1 33%;
+    flex: 0 1 33%;
+    transition: background,outline 300ms;
 }
 
+.event_item.active {
+    outline: 8px solid #214f7b;
+    background: #214f7b;
+    z-index: 1;
+}
 .event_item info {
 	padding: 5px;
 	display: block;
@@ -103,10 +123,19 @@ gray {
     position: fixed;
     width: 100%;
     height: calc(100% - 350px);
-    overflow: auto;
-    z-index: 1;
+    z-index: 2;
     max-width: 900px;
     left: calc(50% - 450px);
+}
+#event .timerow {
+    padding: 15px;
+    display: block;
+	color: #dc6123;
+}
+#event scrollable {
+    overflow: auto;
+    height: 95%;
+    display: block;
 }
 #event .cover {
 	display: block;
@@ -133,6 +162,18 @@ gray {
 .fa.fa-facebook-square {
     color: #8cb7ff;
 }
+
+span.dpn {
+    background: #aaa;
+    border-radius: 4px;
+    color: #333;
+    overflow: hidden;
+    height: 26px;
+    display: inline-block;
+    font-weight: bold;
+    vertical-align: top;
+}
+
 
 @media screen and (max-height: 400px) {
 	#map {
