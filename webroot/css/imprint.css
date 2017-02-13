@@ -1,0 +1,16 @@
+.imprint h1 {
+    padding: 5px 0px 13px 0px;
+    font-size: 1.4em;
+    border-top: 10px solid #333;
+}
+
+.imprint h2 {
+    padding: 5px 0px 13px 0px;
+    font-size: 1.1em;
+}
+
+.imprint p {
+    padding: 10px 5px;
+    background: #333;
+    font-size: 0.8em;
+}
