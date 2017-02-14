@@ -21,6 +21,7 @@ use Psy\Shell as PsyShell;
 use Cake\ORM\TableRegistry;
 use App\Shell\Task\SyncTask;
 use \DateTime;
+use App\Controller\Helper\SlackPushConnector;
 
 /**
  * Simple console wrapper around Psy\Shell.
@@ -226,8 +227,11 @@ class ConsoleShell extends Shell
 
 		//if($pendingAdded + $approvedAdded + $rejectedAdded > 0) {
 		if($pendingAdded > 0) {
-			// TODO: must make a task class with settings in config/app.php
-			exec('push -b "New events in '.$ds['description'].' ('.$pendingAdded.' pending, '.$approvedAdded.' approved, '.$rejectedAdded.' rejected)" -m date -e dpnet-bot');
+			$slack = new SlackPushConnector();
+			$slack->push('New events in '.$ds['description'].' ('.$pendingAdded.' pending, '.$approvedAdded.' approved, '.$rejectedAdded.' rejected)', 
+						"date", 
+						"dpnet-bot", 
+						"notifications");
 		}
     }
     

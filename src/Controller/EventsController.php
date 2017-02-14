@@ -7,6 +7,7 @@ use \DateTime;
 use Cake\Event\Event;
 use Cake\Routing\Router;
 use Cake\ORM\TableRegistry;
+use App\Controller\Helper\SlackPushConnector;
 
 /**
  * Events Controller
@@ -200,8 +201,8 @@ class EventsController extends AppController
 	
 						$this->Flash->success(__('Thank you. The event "'.$event->event_name.'" is going to be processed by our team and is currently "'.$event->event_approval.'".'));
 						
-						// TODO: must make a task class with settings in config/app.php
-						exec('push -b "New pending event '.$event->event_name.'" -m date -e dpnet-bot');
+						$slack = new SlackPushConnector();
+    					$slack->push("New pending event '.$event->event_name.'", "date", "dpnet-bot", "notifications");
 					}
 		            
 		            $event_location = Router::fullbaseUrl().Router::url(['action' => 'edit', $id]);
