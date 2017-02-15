@@ -6,6 +6,8 @@ use App\Shell\Task\SyncTask;
 use Cake\Routing\Router;
 use Cake\ORM\TableRegistry;
 use \DateTime;
+use Cake\Event\Event;
+use App\Shell\Task;
 
 /**
  * Datasource Controller
@@ -14,6 +16,18 @@ use \DateTime;
  */
 class DatasourceController extends AppController
 {
+
+	public function beforeFilter(Event $event) {
+		parent::beforeFilter($event);
+		$this->Auth->allow( 'sync' );
+	}
+	
+	public function sync() {
+		$task = new SyncTask();
+		$e = $task->execute(null);
+		echo "OK";
+		exit(1);
+	}
 
     /**
      * Index method
