@@ -76,12 +76,15 @@ var showEvent = function(id) {
 	
 	var date = new Date(event.event_start);
 	
+	var longlat = event.loc_latitude + "," + event.loc_longitude;
+	
 	$("name", el).text(event.event_name);
 	$("description", el).text(event.event_description);
 	$("img.cover", el).attr("src", event.cover);
-	$("date").html(date.toDateString());
-	$("time").html(date.toTimeString().substr(0, 5));
-	$(".extern-facebook").attr("href", "https://facebook.com/" + event.id);
+	$("img.map", el).attr("src", "http://dev.virtualearth.net/REST/v1/Imagery/Map/Road/"+longlat+"/14?mapSize=400,300&pushpin="+longlat+"&key=AtUkIfRPJe2s4ai4cWBUq9pSNC_C12ihR8jlCYlsNm7462vreYHy2c32AW9kTFRp");
+	$("date", el).html(date.toDateString());
+	$("time", el).html(date.toTimeString().substr(0, 5));
+	$(".extern-facebook", el).attr("href", "https://facebook.com/" + event.id);
 	$("body").addClass("noscroll");
 }
 

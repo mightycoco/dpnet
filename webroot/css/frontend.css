@@ -24,6 +24,7 @@ header {
 	font-size:1.5em;
 	padding: 5px;
 	height: 27px;
+	overflow-x: hidden;
 }
 footer {
 	background: #333;
@@ -122,10 +123,11 @@ gray {
     min-height: 300px;
     position: fixed;
     width: 100%;
-    height: calc(100% - 350px);
-    z-index: 2;
+    height: calc(100% - 37px);
+    z-index: 10000;
     max-width: 900px;
     left: calc(50% - 450px);
+    top: 37px;
 }
 #event .timerow {
     padding: 15px;
@@ -134,15 +136,19 @@ gray {
 }
 #event scrollable {
     overflow: auto;
-    height: 95%;
+    height: calc(100% - 78px);
     display: block;
 }
 #event .cover {
 	display: block;
 	width: 100%;
 }
+#event .map {
+	float: right;
+	padding: 20px 0px 20px 20px;
+}
 #event description {
-    padding: 20px;
+    padding: 0px 20px;
     display: block;
     white-space: pre-wrap;
 }
@@ -196,5 +202,11 @@ span.dpn {
 @media only screen and (max-width: 640px) {
 	.event_item {
 		flex: 0 1 100%;
+	}
+	header {
+		font-size: 1em;
+	}
+	header a .text {
+	    margin-top: -17px;
 	}
 }

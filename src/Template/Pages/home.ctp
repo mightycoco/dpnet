@@ -18,6 +18,7 @@
 	<span class='timerow'><span class='fa fa-calendar-o'></span> <date></date> <span class='fa fa-clock-o'></span> <time></time></span>
 	<scrollable>
 		<img class='cover'/>
+		<img class='map'/>
 		<links>
 			<a href='' class='extern-facebook' target='dpnet-facebook'><span class='fa fa-facebook-square'></span> Facebook</a> / 
 			<a href='javascript' class='intern-ics'><span class='fa fa-calendar'></span> Export to Calendar</a>
