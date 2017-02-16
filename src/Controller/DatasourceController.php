@@ -7,7 +7,7 @@ use Cake\Routing\Router;
 use Cake\ORM\TableRegistry;
 use \DateTime;
 use Cake\Event\Event;
-use App\Shell\Task;
+use App\Shell\ConsoleShell;
 
 /**
  * Datasource Controller
@@ -23,8 +23,9 @@ class DatasourceController extends AppController
 	}
 	
 	public function sync() {
-		$task = new SyncTask();
-		$e = $task->execute(null);
+		$task = new ConsoleShell();
+		$task->Sync = new SyncTask();
+		$e = $task->sync(null);
 		echo "OK";
 		exit(1);
 	}

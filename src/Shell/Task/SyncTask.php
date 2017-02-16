@@ -13,7 +13,7 @@ class SyncTask extends Shell {
 			$id = $this->getNextDatasourceId();
 			$this->setNextDatasourceId($id);
 		}
-		$datasource = TableRegistry::get('Datasource')->findBySource($id)->first();//;->find('all')->where(['source'=>$id])->first();
+		$datasource = TableRegistry::get('Datasource')->findBySource($id)->first();
 		
 		$access_token = $this->getAccessToken();
 
