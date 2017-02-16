@@ -21,7 +21,7 @@ class DatasourceController extends AppController
 		parent::beforeFilter($event);
 		$this->Auth->allow( 'sync' );
 	}
-	
+
 	public function sync() {
 		$task = new ConsoleShell();
 		$task->Sync = new SyncTask();
