@@ -12,7 +12,7 @@
 <h2>Kontakt:</h2>
 <p>
 <table>
-	<tr><td>E-Mail:</td><td>saervice@dark-party.net</td>
+	<tr><td>E-Mail:</td><td>service@dark-party.net</td>
 </tr></table>
 </p>
 
