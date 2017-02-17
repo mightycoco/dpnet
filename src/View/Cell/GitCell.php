@@ -11,9 +11,18 @@ class GitCell extends Cell
     		if($this->request->query['git'] == 'pull') {
     			return $this->pull();
     		}
+    		if($this->request->query['git'] == 'fetch') {
+    			return $this->pull();
+    		}
     	}
-
-        $git_status = shell_exec('git git fetch origin ; git log origin/master ^master');
+        
+        $git_status = "Use fetch or pull";
+        $this->set(compact('git_status'));
+		return $this;
+    }
+    
+    public function fetch() {
+    	$git_status = shell_exec('git git fetch origin ; git log origin/master ^master');
         if(empty($git_status)) $git_status = "Up to date";
 		$this->set(compact('git_status'));
 		return $this;
