@@ -5,7 +5,6 @@ use Cake\View\Cell;
 
 class GitCell extends Cell
 {
-
     public function display()
     {
     	if(isset($this->request->query['git'])) {
