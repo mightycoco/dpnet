@@ -13,7 +13,7 @@ class GitCell extends Cell
     		}
     	}
 
-        $git_status = shell_exec('git status');
+        $git_status = shell_exec('git git fetch origin ; git log origin/master ^master');
 		$this->set(compact('git_status'));
 		return $this;
     }
