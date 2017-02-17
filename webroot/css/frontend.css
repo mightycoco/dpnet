@@ -74,6 +74,10 @@ gray {
 #map {
 	background: black;
 	height: 300px;
+	transition: opacity 300ms;
+}
+body.noscroll #map {
+	opacity: 0.0;
 }
 
 .event_item {
