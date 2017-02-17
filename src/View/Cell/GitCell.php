@@ -12,6 +12,7 @@ class GitCell extends Cell
     			return $this->pull();
     		}
     	}
+
         $git_status = shell_exec('git status');
 		$this->set(compact('git_status'));
 		return $this;
