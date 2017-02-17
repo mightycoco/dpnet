@@ -151,9 +151,14 @@ gray {
     padding: 0px 20px;
     display: block;
     white-space: pre-wrap;
+    margin-bottom: 50px;
 }
 #close_event {
-	padding: 5px;
+	padding: 10px;
+	outline: 2px solid #555;
+	margin: 5px;
+	background: #333;
+	float: right;
 }
 #close_event:hover {
 	color: orange;
@@ -196,6 +201,11 @@ span.dpn {
 @media screen and (max-width: 900px) {
 	#event {
 	    left: 0px;
+	    top: 0px;
+	    height: 100%;
+	}
+	#event .map {
+		max-width: 50%;
 	}
 }
 

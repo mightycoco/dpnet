@@ -1,5 +1,6 @@
 var map = null;
 var old_map_pos = {};
+var animation_duration = 300;
 var svgNormal = '<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><circle cx="25" cy="25" r="10" stroke="black" stroke-width="1" fill="orange" /></svg>';
 var svgHover = '<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><circle cx="25" cy="25" r="15" stroke="black" stroke-width="1" fill="blue" /></svg>';
 
@@ -13,7 +14,7 @@ $(function() {
 		showEvent($(e.currentTarget).attr("id"));
 		old_map_pos.zoom = map.getZoom();
 		old_map_pos.center = map.getCenter();
-		map.setView({zoom:11, center:pin.getLocation()});
+		// map.setView({zoom:11, center:pin.getLocation()});
 	});
 
 	$(document).on("keydown", "body", function(e) {
@@ -23,9 +24,17 @@ $(function() {
 	});
 	
 	$(document).on("click", "#close_event", function(e) {
-		$("#event").hide();
+		if(window.outerWidth < 900) {
+		$("#event")
+			.offset({left:0})
+			.animate({left:window.outerWidth}, animation_duration, function() { 
+				$(this).hide(); 
+			});
+		} else {
+			$("#event").fadeOut();
+		}
 		$("body").removeClass("noscroll");
-		map.setView({zoom: old_map_pos.zoom, center: old_map_pos.center});
+		// map.setView({zoom: old_map_pos.zoom, center: old_map_pos.center});
 	});
 	
 	$(document).on("mouseover", ".event_item:not(.daysplit)", function(e) {
@@ -68,7 +77,14 @@ var showVisibleEvents = function() {
 }
 
 var showEvent = function(id) {
-	$("#event").show();
+	if(window.outerWidth < 900) {
+		$("#event")
+			.offset({left:window.outerWidth})
+			.show()
+			.animate({left:0}, animation_duration);
+	} else {
+		$("#event").fadeIn();
+	}
 	
 	var event = $.grep(events, function(e) {return e.id == id})[0];
 	var el = $("#event");
