@@ -19,7 +19,7 @@ class EventsController extends AppController
 	
 	public function beforeFilter(Event $event) {
 		parent::beforeFilter($event);
-		$this->Auth->allow( 'addFromUri' );
+		$this->Auth->allow([ 'addFromUri','exportIcs' ]);
 	}
 
     /**
@@ -119,6 +119,39 @@ class EventsController extends AppController
         }
         $this->set(compact('event'));
         $this->set('_serialize', ['event']);
+    }
+    
+    public function exportIcs($id) {
+  		$event = $this->Events->get($id);
+		$start = $event->event_start;
+		$end = $event->event_end ? $event->event_end : "";
+		$location = "$event->loc_street, $event->loc_city / $event->loc_country";
+		$subject = $event->event_name;
+	 	$url = " http://facebook.com/" . $event->id;
+	 	$description = "$event->place_name $url";
+	 	if($start) $start = date("Ymd\THis\Z",strtotime($start));
+	 	if($end) $end = date("Ymd\THis\Z",strtotime($end));
+	 	$dstamp = date("Ymd\THis\Z");
+
+	 	header("Content-Type: text/calendar");
+		echo <<<END
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:https://dark-party.net//NONSGML v1.0//EN
+DTSTAMP: $dstamp
+ORGANIZER: ""
+BEGIN:VEVENT
+UID: $event->id
+DTSTART: $start
+DTEND: $end
+LOCATION: $location
+URL: $url
+SUMMARY: $subject
+DESCRIPTION: $description
+END:VEVENT
+END:VCALENDAR
+END;
+		exit(0);
     }
     
     /**

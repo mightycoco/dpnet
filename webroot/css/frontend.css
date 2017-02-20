@@ -24,7 +24,7 @@ header {
 	font-size:1.5em;
 	padding: 5px;
 	height: 27px;
-	overflow-x: hidden;
+	overflow: hidden;
 }
 footer {
 	background: #333;

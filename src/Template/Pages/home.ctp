@@ -21,7 +21,7 @@
 		<img class='map'/>
 		<links>
 			<a href='' class='extern-facebook' target='dpnet-facebook'><span class='fa fa-facebook-square'></span> Facebook</a> / 
-			<a href='javascript' class='intern-ics'><span class='fa fa-calendar'></span> Export to Calendar</a>
+			<a href='' class='intern-ics'><span class='fa fa-calendar'></span> Export to Calendar</a>
 		</links>
 		<description></description>
 	</scrollable>

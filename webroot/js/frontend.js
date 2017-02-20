@@ -101,6 +101,7 @@ var showEvent = function(id) {
 	$("date", el).html(date.toDateString());
 	$("time", el).html(date.toTimeString().substr(0, 5));
 	$(".extern-facebook", el).attr("href", "https://facebook.com/" + event.id);
+	$(".intern-ics", el).attr("href", "./events/export-ics/" + event.id);
 	$("body").addClass("noscroll");
 }
 
@@ -233,25 +234,5 @@ function GetMap()
         Microsoft.Maps.Events.addThrottledHandler(pin, 'mouseout', function (e) {
             e.target.setOptions({ color: 'orange' });
         }, 1000);
-	});
-	
-	$(".intern-ics").on("click", function(e) {
-		e.preventDefault();
-		
-		var event = $("#event").data("event");
-		var start = event.event_start;
-	    var end = event.event_end ? event.event_end : "";
-	    var location = event.loc_street + ", " + event.loc_city + " (" + event.loc_country + ")";
-	    var subject = event.event_name;
-	    var url = " http://facebook.com/" + event.id;
-	    var description = event.place_name + url;
-	    if(start) start = start.replace(/[-:]/ig, "").replace(/\+0000/ig, "");
-	    if(end) end = end.replace(/[-:]/ig, "").replace(/\+0000/ig, "");
-	
-	    var icsMSG = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//dark-party.net//NONSGML v1.0//EN\nBEGIN:VEVENT\nUID:"+event.id+"\nDTSTAMP:20120315T170000Z\nDTSTART:" + start +"\nDTEND:" + end +"\nLOCATION:" + location + "\nURL:"+url+"\nSUMMARY:" + subject + "\nDESCRIPTION:" + description + "\nEND:VEVENT\nEND:VCALENDAR";
-	
-	    window.open( "data:text/calendar;charset=utf8," + escape(icsMSG));
-	    
-		return false;	
 	});
 }
