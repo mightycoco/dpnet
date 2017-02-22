@@ -54,15 +54,6 @@ class DatasourcesCell extends Cell
 				'sum' => $usg['count']
 			];
 		}
-		/*for($i = 0; $i < count($approved_per_ds); $i++) {
-			array_push($ds_usage, [
-				"id"=>$approved_per_ds[$i]['DatasourceID'],
-				"description"=>$approved_per_ds[$i]['Description'],
-				"approved"=>$approved_per_ds[$i]['Count'],
-				"pending"=>$pending_per_ds[$i]['Count'],
-				"rejected"=>$rejected_per_ds[$i]['Count']
-			]);
-		}*/
 		
 		$this->set('ds_usage', $ds_usage);
         
