@@ -19,7 +19,7 @@ class SyncTask extends Shell {
 
 		$fb = $this->getFacebook();
 		
-		$response = $fb->get("/$id/events", $access_token);
+		$response = $fb->get("/$id/events?since=".time(), $access_token);
 		$eventsEdge = $response->getGraphEdge()->asArray();
 
 		$cmpDate = function($a, $b)
