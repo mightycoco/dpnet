@@ -31,6 +31,7 @@ $cakeDescription = 'dark-party.net - administration';
     <?= "";//$this->Html->css('font-awesome.min.css') ?>
     <?= $this->Html->script('jquery.min.js') ?>
     <?= $this->Html->script('backend.js') ?>
+    <?= $this->Html->script('translate.js') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>

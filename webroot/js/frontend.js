@@ -62,16 +62,27 @@ $(function() {
 var showVisibleEvents = function() {
 	if($("#event").is(":visible")) 
 		return;
+
 	var bounds = map.getBounds();
 	$(".event_item:not(.daysplit)").hide();
 	
+	var localShow = function(lpin) {
+		$(".event_item:not(.daysplit)").each(function(i, e) {
+			if(lpin.entity.id == $(e).data().pin.entity.id) {
+				$(e).show();
+			}
+		});
+	}
+
 	$.each(map.getV8Map().getLayers()[0].getPrimitives(), function(i,p) {
 		if(bounds.contains(p.getLocation())) {
-			$(".event_item:not(.daysplit)").each(function(i, e) {
-				if(p.entity.id == $(e).data().pin.entity.id) {
-					$(e).show();
-				}
-			});
+			if(p.containedPushpins) {
+				$.each(p.containedPushpins, function(i, pin) {
+					localShow(pin);
+				})
+			} else {
+				localShow(p);
+			}
 		}
 	});
 }
@@ -169,51 +180,20 @@ function entityFromPin(pin) {
 	return entity;
 }
 
-function GetMap()
-{
-	// https://www.microsoft.com/maps/choose-your-bing-maps-API.aspx
-	map = new Microsoft.Maps.Map('#map', {
-		credentials: 'AtUkIfRPJe2s4ai4cWBUq9pSNC_C12ihR8jlCYlsNm7462vreYHy2c32AW9kTFRp',
-		center: new Microsoft.Maps.Location(49,5, 8),
-		navigationBarMode: Microsoft.Maps.NavigationBarMode.default,
-		zoom: 5,
-		culture: 'en-us',
-		disableStreetside: false,
-		showCopyright: false,
-		// showDashboard: false,
-		showLogo: false,
-		showScalebar: false,
-		showTermsLink: false,
-		showZoomButtons: false
-	});
-	
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-        	var location = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
-        	map.setView({zoom: 11, center: location});
-        	
-        	var pin = new Microsoft.Maps.Pushpin(location, {
-	            color: 'red'
-	        });
-	    	map.entities.push(pin);
-        });
-    }
-	
-	// Microsoft.Maps.Events.addHandler(map, 'viewchangeend', viewChanged);
-	
-	Microsoft.Maps.Events.addThrottledHandler(map, 'viewchangeend', viewChanged, 2000);
-	
+var createPins = function() {
+	var pins = [];
 	$.each(events, function(i, evt) {
 		var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(evt.loc_latitude, evt.loc_longitude), {
-	            //title: evt.event_name,
-	            //subTitle: evt.place_name,
-	            //text: evt.place_name[0],
-	            data: i,
-	            color: 'orange',
-				//anchor: new Microsoft.Maps.Point(25, 50),
-				//icon: svgNormal
-	        });
-	    map.entities.push(pin);
+            //title: evt.event_name,
+            //subTitle: evt.place_name,
+            //text: evt.place_name[0],
+            data: i,
+            color: 'orange',
+			//anchor: new Microsoft.Maps.Point(25, 50),
+			//icon: svgNormal
+        });
+	    
+	    //map.entities.push(pin);
 	    
 	    $("#"+evt.id).data("pin", pin);
 	    
@@ -234,5 +214,78 @@ function GetMap()
         Microsoft.Maps.Events.addThrottledHandler(pin, 'mouseout', function (e) {
             e.target.setOptions({ color: 'orange' });
         }, 1000);
+        
+	    pins.push(pin);
 	});
+	return pins;
+}
+
+var clusterClicked = function(e) {
+    if (e.target.containedPushpins) {
+        var locs = [];
+        for (var i = 0, len = e.target.containedPushpins.length; i < len; i++) {
+            //Get the location of each pushpin.
+            locs.push(e.target.containedPushpins[i].getLocation());
+        }
+
+        //Create a bounding box for the pushpins.
+        var bounds = Microsoft.Maps.LocationRect.fromLocations(locs);
+
+        //Zoom into the bounding box of the cluster. 
+        //Add a padding to compensate for the pixel area of the pushpins.
+        map.setView({ bounds: bounds, padding: 100 });
+    }
+}
+
+function GetMap()
+{
+	// https://www.microsoft.com/maps/choose-your-bing-maps-API.aspx
+	map = new Microsoft.Maps.Map('#map', {
+		credentials: 'AtUkIfRPJe2s4ai4cWBUq9pSNC_C12ihR8jlCYlsNm7462vreYHy2c32AW9kTFRp',
+		center: new Microsoft.Maps.Location(49,5, 8),
+		navigationBarMode: Microsoft.Maps.NavigationBarMode.default,
+		zoom: 5,
+		culture: 'en-us',
+		disableStreetside: false,
+		showCopyright: false,
+		// showDashboard: false,
+		showLogo: false,
+		showScalebar: false,
+		showTermsLink: false,
+		showZoomButtons: false
+	});
+	
+	Microsoft.Maps.loadModule("Microsoft.Maps.Clustering", function () {
+        //Generate 1,000 random pushpins in the map view.
+        var pins = createPins();
+
+        //Create a ClusterLayer and add it to the map.
+        var clusterLayer = new Microsoft.Maps.ClusterLayer(
+        	pins, 
+        	{
+        		// gridSize: 30, 
+        		clusteredPinCallback: function(cluster) {
+        			Microsoft.Maps.Events.addHandler(cluster, 'click', clusterClicked);
+        		}
+        	}
+        );
+        map.layers.insert(clusterLayer);
+		Microsoft.Maps.Events.addThrottledHandler(map, 'viewchangeend', viewChanged, 2000);
+		
+		window.setTimeout(function() {viewChanged();}, 2000);
+
+	    if (navigator.geolocation) {
+	        navigator.geolocation.getCurrentPosition(function(position) {
+	        	var location = new Microsoft.Maps.Location(position.coords.latitude, position.coords.longitude);
+	        	map.setView({zoom: 11, center: location});
+	        	
+	        	var pin = new Microsoft.Maps.Pushpin(location, {
+		            color: 'red'
+		        });
+		    	map.entities.push(pin);
+	        });
+	    }
+    });
+	
+	// map.entities.push(createPins());
 }

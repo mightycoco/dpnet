@@ -9,6 +9,7 @@
 	<?= $this->Html->css('reset.css') ?>
 	<?= $this->Html->css('frontend.css') ?>
 	<?= $this->Html->script('jquery.min.js') ?>
+	<?= $this->Html->script('translate.js') ?>
     <link rel="stylesheet" href="//opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU" crossorigin="anonymous">
 </head>
 <body>

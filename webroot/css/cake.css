@@ -602,5 +602,5 @@ table td {
 
 .event-cover {
 	max-height: 300px;
-	max-width: 500px;
+	max-width: 100%;
 }

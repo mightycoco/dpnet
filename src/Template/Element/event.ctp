@@ -10,7 +10,7 @@
 			</div>
 		</button>
 	</span>
-	<span class='id'><span class="badge"><?=$item->getWeight()?></span><?= $item->id ?></span>
+	<span class='id'><span class="badge"><?=$item->getWeight()?></span><a href='https://facebook.com/events/<?= $item->id ?>' target='facebook'><span class='fa fa-facebook-square'></span></a></span>
 	<span class='type'><span class="label"><?= $item->event_start->format("d/m/Y H:i:s") ?></span></span>
 	<span class='description'><?= $this->Html->link(__($item->event_name), ['action' => 'edit', $item->id]) ?></span>
 	<span class='source'><span class='fa fa-<?= $item->approval_icon()?>'><?= $item->event_approval ?></span></span>
@@ -41,6 +41,10 @@
 	</span>
 	<span class='content' hidden hidden-ref='<?= $item->id ?>'>
 		<img src='<?= $item->cover ?>' class='event-cover'/><br/>
-		<?= str_replace(["\r\n","\r","\n"], "<br/>", $item->htmlify($item->event_description)) ?>
+		<?php if(strlen($item->event_description) > 2): ?>
+		<a href='#' class='translate button' state='original'>Translate</a><br/>
+		<span class='text'><?= str_replace(["\r\n","\r","\n"], "<br/>", $item->htmlify($item->event_description)) ?></span>
+		<span class='translated'></span>
+		<?php endif; ?>
 	</span>
 </div>
