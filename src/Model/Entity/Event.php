@@ -86,18 +86,21 @@ class Event extends Entity
 			$task = new SyncTask();
 			$fb = $task->getFacebook();
 			$access_token = $task->getAccessToken();
-			$response = $fb->get("/".$this->datasource_id."/?fields=location,name", $access_token);
-			
-			$place = $response->getDecodedBody();
-			$this->place_id = $place['id'];
-			if(empty($this->place_name)) $this->place_name = $place['name'];
-			if(isset($place['location'])) {
-				$this->loc_city = $place['location']['city'];
-				$this->loc_country = @$place['location']['country'];
-				$this->loc_street = @$place['location']['street'];
-				$this->loc_zip = @$place['location']['zip'];
-				$this->loc_latitude = @$place['location']['latitude'];
-				$this->loc_longitude = @$place['location']['longitude'];
+			try {
+				$response = $fb->get("/".$this->datasource_id."/?fields=location,name", $access_token);
+				
+				$place = $response->getDecodedBody();
+				$this->place_id = $place['id'];
+				if(empty($this->place_name)) $this->place_name = $place['name'];
+					if(isset($place['location'])) {
+						$this->loc_city = $place['location']['city'];
+						$this->loc_country = @$place['location']['country'];
+						$this->loc_street = @$place['location']['street'];
+						$this->loc_zip = @$place['location']['zip'];
+						$this->loc_latitude = @$place['location']['latitude'];
+						$this->loc_longitude = @$place['location']['longitude'];
+					}
+				} catch(\Exception $e) {
 			}
 		}
 		if($this->loc_zip == null) $this->loc_zip = 0;

@@ -45,6 +45,7 @@ $home  = Router::fullbaseUrl().Router::url(['controller' => '', 'action' => ' ']
 			        <?= h($error->queryString) ?>
 			    </p>
 			<?php endif; ?>
+	
 			<?php if (!empty($error->params)) : ?>
 			        <strong>SQL Query Params: </strong>
 			        <?php Debugger::dump($error->params) ?>
