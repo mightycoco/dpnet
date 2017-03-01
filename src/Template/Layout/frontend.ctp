@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>dark-party.net</title>
+	<meta name="application-name" content="dark-party.net"/>
+	<meta name="msapplication-TileColor" content="#000000"/>
 	<meta charset="utf-8">
-	<meta name="author" content="ascii">
+	<meta name="author" content="asc-ii">
 	<meta name="description" content="dark-party.net - the darker party network"/>
 	<meta id="meta" name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>dark-party.net</title>
 	<?= $this->Html->css('reset.css') ?>
 	<?= $this->Html->css('frontend.css') ?>
 	<?= $this->Html->script('jquery.min.js') ?>
