@@ -127,9 +127,9 @@ class SubsystemController extends AppController
 			$this->setAccessToken($access_token);
 		}
 		
-		if($response) {
+		if($response && $access_token) {
 			$me = $response->getGraphUser();
-			$this->Flash->success(__('Received valid token via "'.$me->getName().'"'));
+			$this->Flash->success(__('Received valid token "'.$access_token.'" via "'.$me->getName().'"'));
 		} else {
 			$this->Flash->error(__('Couldn\'t request a token'));
 		}
