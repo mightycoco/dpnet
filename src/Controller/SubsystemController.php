@@ -77,7 +77,7 @@ class SubsystemController extends AppController
     public function authenticate() {
     	$access_token = null;
     	
-    	$redirect_url = $secret = Configure::read('Facebook.secret');
+    	$redirect_url = $secret = Configure::read('Facebook.redirect_url');
     	$app_id = $secret = Configure::read('Facebook.app_id');
     	$secret = $secret = Configure::read('Facebook.secret');
 
