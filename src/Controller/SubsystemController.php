@@ -38,9 +38,9 @@ class SubsystemController extends AppController
     	
     	if(!$orm) {
     		$orm = $table->newEntity();
-    		$orm->set(['skey'=>'access_token','value'=>$token]);
-    		$table->save($orm);
     	}
+		$orm->set(['skey'=>'access_token','value'=>$token]);
+		$table->save($orm);
     }
 
     /**
