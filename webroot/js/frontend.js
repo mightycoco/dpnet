@@ -8,6 +8,7 @@ var svgHover = '<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"><
 // or http://gis.stackexchange.com/questions/153594/zoom-to-fit-pushpins-in-bing-maps
 
 $(function() {
+	$("header .text").text(location.hostname);
 	$(document).on("click", ".event_item:not(.daysplit)", function(e) {
 		var pin = $(e.currentTarget).data("pin");
 		markActivePin(pin);
