@@ -479,7 +479,7 @@ button.more {background:#61b6d9;margin:0px;white-space:nowrap;padding:10px 10px;
 .view-item .description {font-weight:bold;}
 .view-item .source {clear:both;min-width:180px;}
 .view-item .created {}
-.view-item .content {margin:0px;background:#f9f9f9;outline:1px solid #999;clear:both;width:100%;}
+.view-item .content {margin:0px;background:#f9f9f9;outline:1px solid #999;clear:both;width:100%;padding:10px;}
 .view-item .actions {float:right;}
 
 widgets {
