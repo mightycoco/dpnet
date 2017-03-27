@@ -30,8 +30,8 @@ $cakeDescription = 'dark-party.net - administration';
 
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('cake.css') ?>
-    <?= "";//$this->Html->css('font-awesome.min.css') ?>
     <?= $this->Html->script('jquery.min.js') ?>
+    <?= $this->Html->script('jquery-ui.min.js') ?>
     <?= $this->Html->script('backend.js') ?>
     <?= $this->Html->script('translate.js') ?>
 

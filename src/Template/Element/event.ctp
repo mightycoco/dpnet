@@ -1,4 +1,4 @@
-<div class='event-item view-item'>
+<div class='event-item view-item swipe-h'>
 	
 	<col1>
 		<img src='<?= $item->cover ?>' class='event-cover'/>
@@ -9,8 +9,8 @@
 		<?= $this->Form->postLink(__(''), 
 										['action' => 'delete', $item->id], 
 										['class'=>'fa fa-trash right', 'confirm' => __('Are you sure you want to delete "{0}"?', $item->event_name)]) ?>
-		<div>
-			<b><?= h($item->event_start->format("D. d M, Y @ H:i")) ?> - <?= h($item->event_end->format("D. d M, Y @ H:i")) ?></b><br/>
+		<div class='short-info'>
+			<b class='date'><?= h($item->event_start->format("D. d M, Y @ H:i")) ?> - <?= h($item->event_end->format("D. d M, Y @ H:i")) ?></b><br/>
 			<?= h($item->place_name) ?>, <?= h($item->loc_city) ?> (<?= h($item->loc_country) ?>)<br/>
 			
 			<span>

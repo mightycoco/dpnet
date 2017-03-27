@@ -571,6 +571,9 @@ div.message.hidden {
 	.content {
 		padding-left: 5px;
 	}
+	.event-item .date {
+		font-size: 75%;
+	}
 }
 
 .content h3 {
@@ -610,6 +613,7 @@ table td {
 
 .event-item .event-cover {
 	max-width: 340px;
+	max-height: 140px;
 }
 
 .event-item col1 {

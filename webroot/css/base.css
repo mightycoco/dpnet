@@ -465,7 +465,20 @@ button.approve {background:#6b9447;margin:0px;white-space:nowrap;padding:10px 10
 button.reject {background:#d23939;margin:0px;white-space:nowrap;padding:10px 10px;}
 button.more {background:#61b6d9;margin:0px;white-space:nowrap;padding:10px 10px;}
 
-.badge {border-radius:20px;border:1px solid #7a7b64;margin: 5px;background:#dce47e;width:22px;height:22px;line-height:20px;text-align:center;color:#888;font-size:0.7em;font-weight:bold;display:inline-block;}
+.badge {
+	border-radius: 20px;
+    border: 1px solid #aaa;
+    margin: 5px 15px 5px 0px;
+    background: #ddd;
+    width: 22px;
+    height: 22px;
+    line-height: 20px;
+    text-align: center;
+    color: #000;
+    font-size: 0.7em;
+    font-weight: bold;
+    display: inline-block;
+}
 
 .main-mobile-bar {display:block;background:#333;}
 .main-hamburger {display:none !important;color:white;}
