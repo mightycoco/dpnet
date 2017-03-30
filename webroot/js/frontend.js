@@ -26,16 +26,24 @@ $(function() {
 	
 	$(document).on("click", "#close_event", function(e) {
 		if(window.outerWidth < 900) {
-		$("#event")
-			.offset({left:0})
-			.animate({left:window.outerWidth}, animation_duration, function() { 
-				$(this).hide(); 
-			});
+			$("#event")
+				.offset({left:0})
+				.animate({left:window.outerWidth}, animation_duration, function() { 
+					$(this).hide(); 
+				});
 		} else {
 			$("#event").fadeOut();
 		}
 		$("body").removeClass("noscroll");
+		location.hash = "";
+		pageview("/");
 		// map.setView({zoom: old_map_pos.zoom, center: old_map_pos.center});
+	});
+	
+	$(window).on('hashchange', function() {
+		if(!location.hash) {
+			$("#close_event").trigger("click");
+		}
 	});
 	
 	$(document).on("mouseover", ".event_item:not(.daysplit)", function(e) {
@@ -115,6 +123,9 @@ var showEvent = function(id) {
 	$(".extern-facebook", el).attr("href", "https://facebook.com/" + event.id);
 	$(".intern-ics", el).attr("href", "./events/export-ics/" + event.id);
 	$("body").addClass("noscroll");
+	
+	location.hash = id;
+	pageview("/event/" + id);
 }
 
 var markActivePin = function(pin) {
