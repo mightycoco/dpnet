@@ -16,7 +16,7 @@
 </head>
 <body>
 	<header>
-		<a href='<?= $this->Url->build('/') ?>'><span class='dpn'>dpn</span> <span class='text'>dark-party.net</span></a>
+		<div class='maximize_button'><img src='./webroot/img/max.png'></div><a href='<?= $this->Url->build('/') ?>'><span class='dpn'>dpn</span> <span class='text'>dark-party.net</span></a>
 	</header>
 	
 	<?= $this->fetch('content') ?>

@@ -189,6 +189,38 @@ span.dpn {
     vertical-align: top;
 }
 
+.maximized #map {
+	position: fixed !important;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+
+.maximized gray {
+	display: inline-block;
+}
+
+.maximized margin {
+	max-width: 300px;
+	margin: 0 auto;
+}
+
+.maximized .event_item {
+	z-index: 10;
+	flex: 0 1 100%;
+	background: #333;
+}
+.maximized .event_item.active {
+    outline: 0px;
+    background: #214f7b;
+    z-index: 1;
+}
+.maximize_button {
+	background: black;
+	display: inline-block;
+	margin: 0px 5px 0px 0px;
+	cursor: pointer;
+}
 
 @media screen and (max-height: 400px) {
 	#map {
@@ -216,6 +248,10 @@ span.dpn {
 @media only screen and (max-width: 640px) {
 	.event_item {
 		flex: 0 1 100%;
+	}
+	.maximized margin {
+		max-width: 200px;
+		margin: 0 auto;
 	}
 	header {
 		font-size: 1em;

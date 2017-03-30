@@ -24,6 +24,10 @@ $(function() {
 		}
 	});
 	
+	$(".maximize_button").click(function(){
+		$("body").toggleClass("maximized");
+	});
+	
 	$(document).on("click", "#close_event", function(e) {
 		if(window.outerWidth < 900) {
 			$("#event")
