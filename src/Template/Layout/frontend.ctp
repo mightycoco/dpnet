@@ -7,6 +7,7 @@
 	<meta name="author" content="asc-ii">
 	<meta name="description" content="dark-party.net - the darker party network"/>
 	<meta id="meta" name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="image_src" href="./webroot/img/dpnet.png" />
 	<title>dark-party.net</title>
 	<?= $this->Html->css('reset.css') ?>
 	<?= $this->Html->css('frontend.css') ?>
