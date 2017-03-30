@@ -77,7 +77,7 @@ class Event extends Entity
 			if(isset($event['place']['location'])) {
 				$this->loc_city = $event['place']['location']['city'];
 				$this->loc_country = $event['place']['location']['country'];
-				$this->loc_street = @$event['place']['location']['street'];
+				$this->loc_street = @$event['place']['location']['street'] ? $event['place']['location']['street'] : "";
 				$this->loc_zip = @$event['place']['location']['zip'];
 				$this->loc_latitude = @$event['place']['location']['latitude'];
 				$this->loc_longitude = @$event['place']['location']['longitude'];
