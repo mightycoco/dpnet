@@ -7,9 +7,9 @@
 	<meta name="author" content="asc-ii">
 	<meta name="description" content="dark-party.net - the darker party network"/>
 	<meta id="meta" name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="image_src" href="https://dark-party.net/webroot/img/dpnet.png" />
+	<link rel="image_src" href="https://dark-party.net/webroot/img/dpn.png" />
 	<meta property="og:url" content="https://dark-party.net/" />
-	<meta property="og:image" content="https://dark-party.net/webroot/img/dpnet.png" />
+	<meta property="og:image" content="https://dark-party.net/webroot/img/dpn.png" />
 	<meta property="og:title" content="dark-party.net - the darker party network for europe" />
 	<meta property="og:description" content="find events around you. ebm, wave, gothic, synth-wave, electropop, industrial, neo-folk, electronica, minimal, noise..." />
 	<title>dark-party.net</title>
