@@ -22,6 +22,8 @@ use App\Shell\Task\SyncTask;
  * @property string $loc_zip
  * @property float $loc_latitude
  * @property float $loc_longitude
+ * @property string $owner_id
+ * @property string $owner_name
  */
 class Event extends Entity
 {
@@ -49,18 +51,18 @@ class Event extends Entity
     public function getWeight() {
     	$weight = 0;
 		$good = ['underground','electropop','synthpop','depeche','ndh','welle','nachtwerk','ebm','electronic','industrial','industrie','punk','folk','electro','edm','electric','minimal','goth','mystik','mystic','mystisch','gothic','wave','ndh','ndw','80s','dark','schwarz','schwarzen','schwarze','mittelalter','mittelalterfestivals','mittelalterfestival','mediaval','indie','alternative','fetish','latex','leder','leather','bondage','morbid','morbide','morbiden','nw','gothrock','rabennacht','synthie'];
-		$bad = ['deathmetal','boogie','glamrock','woodstock','krautrock','deathcore','hardcore','metalcore','grunge','doom','discofox','techhouse','reggae','dancehall','afro','afrobeats','rockabilly','hip','hop','hiphop','soul','blues','house','techno','country','countryrock','cover','covers','heavy','metal','hardrock','rock','karaoke','crossover','mieten','soulstimme','gGitarrenmusik','bluesrock','grindcore','noisecore','funk'];
+		$bad = ['fitness','sports','deathmetal','boogie','glamrock','woodstock','krautrock','deathcore','hardcore','metalcore','grunge','doom','discofox','techhouse','reggae','dancehall','afro','afrobeats','rockabilly','hip','hop','hiphop','soul','blues','house','techno','country','countryrock','cover','covers','heavy','metal','hardrock','rock','karaoke','crossover','mieten','soulstimme','gGitarrenmusik','bluesrock','grindcore','noisecore','funk'];
 
     	$words = explode(" ", preg_replace('/[\r\n\/\-\s_#+~\*\?,\.\!]+/', ' ', strtolower(trim($this->event_name . " " . $this->event_description))));
 		foreach($words as $word) {
 			if(in_array(trim($word), $good)) {
-				$weight+=2;
+				$weight+=1.2;
 			}
 			if(in_array(trim($word), $bad)) {
 				$weight--;
 			}
 		}
-		return $weight;
+		return (int)$weight;
     }
     
     public function fromRaw($event) {
@@ -71,6 +73,9 @@ class Event extends Entity
 		$this->event_approval = 'pending';
 		$this->event_start = $event['start_time']->format("Y-m-d H:i:s");
 		$this->event_end = empty($event['end_time']) ? "" : $event['end_time']->format("Y-m-d H:i:s");
+		$this->owner_id = empty($event['owner']) ? "" : $event['owner']['id'];
+		$this->owner_name = empty($event['owner']) ? "" : $event['owner']['name'];
+		if(!$this->datasource_id && $this->owner_id) $this->datasource_id = $this->owner_id;
 		if(!empty($event['place']) && !empty($event['place']['id'])) {
 			$this->place_id = $event['place']['id'];
 			$this->place_name = $event['place']['name'];
@@ -104,6 +109,21 @@ class Event extends Entity
 			}
 		}
 		if($this->loc_zip == null) $this->loc_zip = 0;
+    }
+    
+    public function is_location_ok() {
+    	if(!$this->loc_country || !$this->loc_latitude || !$this->loc_longitude)
+    		return false;
+    		
+    	if(!strcasecmp($this->loc_country, "United Kingdom"))
+    		return false;
+
+    	// greater europe
+    	if($this->loc_longitude > -14 && $this->loc_longitude < 33
+    	&& $this->loc_latitude > 34 && $this->loc_latitude < 60)
+    		return true;
+
+    	return false;
     }
     
     /*public function cover() {

@@ -2,12 +2,13 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
-use App\Shell\Task\SyncTask;
+use App\Shell\Task\SyncBySearchTask;
 use \DateTime;
 use Cake\Event\Event;
 use Cake\Routing\Router;
 use Cake\ORM\TableRegistry;
 use App\Controller\Helper\SlackPushConnector;
+use App\Shell\ConsoleShell;
 
 /**
  * Events Controller
@@ -19,7 +20,15 @@ class EventsController extends AppController
 	
 	public function beforeFilter(Event $event) {
 		parent::beforeFilter($event);
-		$this->Auth->allow([ 'addFromUri','exportIcs' ]);
+		$this->Auth->allow([ 'addFromUri','exportIcs','sync' ]);
+	}
+	
+	public function sync() {
+		$task = new ConsoleShell();
+		$task->SyncBySearch = new SyncBySearchTask();
+		$e = $task->querySync(null);
+		echo "OK";
+		exit(1);
 	}
 
     /**

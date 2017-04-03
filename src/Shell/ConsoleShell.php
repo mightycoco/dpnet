@@ -28,7 +28,7 @@ use App\Controller\Helper\SlackPushConnector;
  */
 class ConsoleShell extends Shell
 {
-	var $tasks = array('Sync');
+	var $tasks = array('Sync', 'SyncBySearch');
     /**
      * Start the shell and interactive console.
      *
@@ -121,6 +121,53 @@ class ConsoleShell extends Shell
 		}
     }
     
+    public function querySync() {
+    	$events = $this->SyncBySearch->execute();
+    	$eventsTable = TableRegistry::get('Events');
+    	
+    	$datasources = TableRegistry::get('Datasource')->find('all')->all()->toArray();
+    	$dsids = [];
+    	foreach($datasources as $ds) {
+    		$dsids[] = $ds->source;
+    	}
+    	
+    	$pendingAdded = 0;
+    	
+    	foreach($events as $event) {
+    		$entity = $eventsTable->newEntity();
+    		$event['datasource'] = 0;
+			$entity->fromRaw($event);
+			$entity->modified = new DateTime('now');
+            $entity->created = new DateTime('now');
+			
+			$weight = $entity->getWeight();
+			$isknown = in_array($entity->owner_id, $dsids);
+			
+			if($entity->is_location_ok() && !$isknown && empty($eventsTable->find('all')->where(['id'=>$event['id']])->first())) {
+				$task = (new SyncTask());
+				$cover = $task
+							->getFacebook()
+							->get("/".$entity->id."/?fields=cover", $task->getAccessToken())
+							->getDecodedBody();
+				$entity->cover = @$cover['cover']['source'];
+				
+				$entity->event_approval = 'pending';
+				
+    			//echo "{$entity->event_name} ($weight) | {$entity->id} {$entity->loc_country} - {$entity->owner_name}\n";
+    			if($eventsTable->save($entity)) {
+    				$pendingAdded++;
+    			}
+			}
+    	}
+    	if($pendingAdded > 0) {
+			$slack = new SlackPushConnector();
+			$slack->push('New events from query ('.$pendingAdded.' pending)', 
+						"date", 
+						"dpnet-bot", 
+						"notifications");
+		}
+    }
+    
     public function upgradeEventModel() {
 		$eventsTable = TableRegistry::get('Events');
 		$events = $eventsTable->find('all')->where(['event_approval !=' => 'rejected', 'cover' => '']);
@@ -189,7 +236,7 @@ class ConsoleShell extends Shell
 							->getFacebook()
 							->get("/".$entity->id."/?fields=cover", $task->getAccessToken())
 							->getDecodedBody();
-				$entity->cover = @$cover['cover']['source'];
+				$entity->cover = $cover['cover']['source'] ? $cover['cover']['source'] : "";
 
 				if($ds->trusted) {
 					$approval = 'approved';
