@@ -143,7 +143,7 @@ class ConsoleShell extends Shell
 			$weight = $entity->getWeight();
 			$isknown = in_array($entity->owner_id, $dsids);
 			
-			if($entity->is_location_ok() && $weight >= 0 && !$isknown && empty($eventsTable->find('all')->where(['id'=>$event['id']])->first())) {
+			if($entity->is_location_ok() && $event['start_time']->getTimestamp() > time() && $weight >= 0 && !$isknown && empty($eventsTable->find('all')->where(['id'=>$event['id']])->first())) {
 				$task = (new SyncTask());
 				$cover = $task
 							->getFacebook()
