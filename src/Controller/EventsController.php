@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Shell\Task\SyncTask;
 use App\Shell\Task\SyncBySearchTask;
 use \DateTime;
 use Cake\Event\Event;
