@@ -143,13 +143,14 @@ class ConsoleShell extends Shell
 			$weight = $entity->getWeight();
 			$isknown = in_array($entity->owner_id, $dsids);
 			
-			if($entity->is_location_ok() && !$isknown && empty($eventsTable->find('all')->where(['id'=>$event['id']])->first())) {
+			if($entity->is_location_ok() && $weight >= 0 && !$isknown && empty($eventsTable->find('all')->where(['id'=>$event['id']])->first())) {
 				$task = (new SyncTask());
 				$cover = $task
 							->getFacebook()
 							->get("/".$entity->id."/?fields=cover", $task->getAccessToken())
 							->getDecodedBody();
 				$entity->cover = @$cover['cover']['source'];
+				if(empty($entity->cover)) $entity->cover = "http://dark-party.eu/webroot/img/banner.png";
 				
 				$entity->event_approval = 'pending';
 				
