@@ -41,7 +41,7 @@ class Event extends Entity
         '*' => true,
         'id' => false
     ];
-    
+
     public function approval_icon() {
     	if($this->event_approval == 'pending') return 'question-circle-o';
     	if($this->event_approval == 'approved') return 'check-circle';
@@ -51,7 +51,7 @@ class Event extends Entity
     public function getWeight() {
     	$weight = 0;
 		$good = ['underground','electropop','synthpop','depeche','ndh','welle','nachtwerk','ebm','electronic','industrial','industrie','punk','folk','electro','edm','electric','minimal','goth','mystik','mystic','mystisch','gothic','wave','ndh','ndw','80s','dark','schwarz','schwarzen','schwarze','mittelalter','mittelalterfestivals','mittelalterfestival','mediaval','indie','alternative','fetish','latex','leder','leather','bondage','morbid','morbide','morbiden','nw','gothrock','rabennacht','synthie'];
-		$bad = ['cosmetogenesi','marathon','fitness','sports','deathmetal','boogie','glamrock','woodstock','krautrock','deathcore','hardcore','metalcore','grunge','doom','discofox','techhouse','reggae','dancehall','afro','afrobeats','rockabilly','hip','hop','hiphop','soul','blues','house','techno','country','countryrock','cover','covers','heavy','metal','hardrock','rock','karaoke','crossover','mieten','soulstimme','gGitarrenmusik','bluesrock','grindcore','noisecore','funk'];
+		$bad = ['schlager','ü30','rockparty','cosmetogenesi','marathon','fitness','sports','deathmetal','boogie','glamrock','woodstock','krautrock','deathcore','hardcore','metalcore','grunge','doom','discofox','techhouse','reggae','dancehall','afro','afrobeats','rockabilly','hip','hop','hiphop','soul','blues','house','techno','country','countryrock','cover','covers','heavy','metal','hardrock','rock','karaoke','crossover','mieten','soulstimme','gGitarrenmusik','bluesrock','grindcore','noisecore','funk'];
 
     	$words = explode(" ", preg_replace('/[\r\n\/\-\s_#+~\*\?,\.\!]+/', ' ', strtolower(trim($this->event_name . " " . $this->event_description))));
 		foreach($words as $word) {
