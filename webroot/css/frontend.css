@@ -216,6 +216,10 @@ span.dpn {
     background: #214f7b;
     z-index: 1;
 }
+.maximized footer {
+    max-width: 300px;
+    height: auto;
+}
 .maximize_button {
 	background: black;
 	display: inline-block;
