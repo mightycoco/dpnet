@@ -18,6 +18,14 @@
 	<?= $this->Html->script('jquery.min.js') ?>
 	<?= $this->Html->script('translate.js') ?>
     <link rel="stylesheet" href="//opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU" crossorigin="anonymous">
+    
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<script>
+	  (adsbygoogle = window.adsbygoogle || []).push({
+	    google_ad_client: "ca-pub-4391121266693794",
+	    enable_page_level_ads: true
+	  });
+	</script>
 </head>
 <body>
 	<header>
