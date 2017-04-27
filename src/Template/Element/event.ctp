@@ -11,7 +11,15 @@
 										['class'=>'fa fa-trash right', 'confirm' => __('Are you sure you want to delete "{0}"?', $item->event_name)]) ?>
 		<div class='short-info'>
 			<b class='date'><?= h($item->event_start ? $item->event_start->format("D. d M, Y @ H:i") : "n/a") ?> - <?= h($item->event_end ? $item->event_end->format("D. d M, Y @ H:i") : "n/a") ?></b><br/>
-			<?= h($item->place_name) ?>, <?= h($item->loc_city) ?> (<?= h($item->loc_country) ?>)<br/>
+			<?= h($item->place_name) ?>, <?= h($item->loc_city) ?> (<?= h($item->loc_country) ?>)
+			<?php if($item->datasource_id > 0) { ?>
+				<?php if($item->datasource() != null) { ?>
+					 | <a href='datasource/edit/<?= h($item->datasource()->uuid) ?>'>Datasource <?= h($item->datasource()->description) ?></a>
+				<?php } else { ?>
+					 | <a href='https://facebook.com/<?= h($item->datasource_id) ?>' target='facebook'>External <?= h($item->datasource_id) ?></a> | <a href='datasource/add-from-uri?uri=https://facebook.com/<?=$item->datasource_id?>' target='addDs'>Add</a>
+				<?php } ?>
+			<?php } ?>
+			<br/>
 			
 			<span>
 				<?php if($item->event_approval != 'approved'): ?>

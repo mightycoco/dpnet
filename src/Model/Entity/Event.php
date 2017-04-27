@@ -3,6 +3,7 @@ namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 use App\Shell\Task\SyncTask;
+use Cake\ORM\TableRegistry;
 
 /**
  * Event Entity
@@ -48,12 +49,18 @@ class Event extends Entity
     	if($this->event_approval == 'rejected') return 'minus-circle';
     }
     
+    public function datasource() {
+    	if($this->datasource_id <= 0) return null;
+    	$ds = TableRegistry::get('Datasource')->find()->where(['source'=>$this->datasource_id])->first();
+    	return $ds;
+    }
+    
     public function getWeight() {
     	$weight = 0;
-		$good = ['underground','electropop','synthpop','depeche','ndh','welle','nachtwerk','ebm','electronic','industrial','industrie','punk','folk','electro','edm','electric','minimal','goth','mystik','mystic','mystisch','gothic','wave','ndh','ndw','80s','dark','schwarz','schwarzen','schwarze','mittelalter','mittelalterfestivals','mittelalterfestival','mediaval','indie','alternative','fetish','latex','leder','leather','bondage','morbid','morbide','morbiden','nw','gothrock','rabennacht','synthie'];
-		$bad = ['schlager','ü30','rockparty','cosmetogenesi','marathon','fitness','sports','deathmetal','boogie','glamrock','woodstock','krautrock','deathcore','hardcore','metalcore','grunge','doom','discofox','techhouse','reggae','dancehall','afro','afrobeats','rockabilly','hip','hop','hiphop','soul','blues','house','techno','country','countryrock','cover','covers','heavy','metal','hardrock','rock','karaoke','crossover','mieten','soulstimme','gGitarrenmusik','bluesrock','grindcore','noisecore','funk'];
+		$good = ['underground','wgt','electropop','synthpop','depeche','ndh','welle','nachtwerk','ebm','electronic','industrial','industrie','punk','folk','electro','edm','electric','minimal','goth','mystik','mystic','mystisch','gothic','wave','ndh','ndw','80s','dark','schwarz','schwarzen','schwarze','mittelalter','mittelalterfestivals','mittelalterfestival','mediaval','indie','alternative','fetish','latex','leder','leather','bondage','morbid','morbide','morbiden','nw','gothrock','rabennacht','synthie'];
+		$bad = ['schlager','eisenbahnmuseum','ü30','rockparty','cosmetogenesi','marathon','fitness','sports','deathmetal','boogie','glamrock','woodstock','krautrock','deathcore','hardcore','metalcore','grunge','doom','discofox','techhouse','reggae','dancehall','afro','afrobeats','rockabilly','hip','hop','hiphop','soul','blues','house','techno','country','countryrock','cover','covers','heavy','metal','hardrock','rock','karaoke','crossover','mieten','soulstimme','gGitarrenmusik','bluesrock','grindcore','noisecore','funk'];
 
-    	$words = explode(" ", preg_replace('/[\r\n\/\-\s_#+~\*\?,\.\!]+/', ' ', strtolower(trim($this->event_name . " " . $this->event_description))));
+    	$words = explode(" ", preg_replace('/[\r\n\/\-\s_#+~\*\?,\.\!]+/', ' ', strtolower(trim($this->event_name . " " . $this->place_name . " " . $this->event_description))));
 		foreach($words as $word) {
 			if(in_array(trim($word), $good)) {
 				$weight+=1.2;

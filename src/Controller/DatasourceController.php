@@ -68,10 +68,11 @@ class DatasourceController extends AppController
     }
     
 	public function addFromUri() {
-		$uri = (object)array('uri' => 'http://test.com');
+		//$uri = (object)array('uri' => 'http://test.com');
+		$uri = $this->request->query('uri');
 		
-		if ($this->request->is('post')) {
-			$uri = $this->request->data['uri'];
+		if ($this->request->is('post') || !empty($this->request->query('uri'))) {
+        	$uri = !empty($this->request->query('uri')) ? $this->request->query('uri') : $this->request->data['uri'];
 			$uri = preg_replace('/\/events[\/]?/', '', $uri);
 			
 			if(stristr($uri, "/pg/")) {
