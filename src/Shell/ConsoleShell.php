@@ -214,8 +214,6 @@ class ConsoleShell extends Shell
 		$approvedAdded = 0;
 		$rejectedAdded = 0;
 		
-		echo $datasource->reject_zero_weight;
-    	
 		foreach($events as $event) {
 			if($event['start_time']->getTimestamp() > time()
 			&& empty($eventsTable->find('all')->where(['id'=>$event['id']])->first())) {
@@ -253,7 +251,7 @@ class ConsoleShell extends Shell
 					}
 				}
 				
-				if($datasource->reject_zero_weight == true && $weight <= 0) {
+				if($datasource->reject_zero_weight != false && $weight <= 0) {
 					$approval = 'rejected';
 					$rejectedAdded++;
 				}

@@ -25,12 +25,14 @@ class EventsCell extends Cell
         
         $connection = ConnectionManager::get('default');
         
+        $days = 18;
+        
         $usage_created = $connection->execute(
-		    'SELECT * FROM (SELECT COUNT(created) AS sum, DATE(created) AS date FROM events GROUP BY date DESC LIMIT 7) AS `table` ORDER BY date ASC'
+		    'SELECT * FROM (SELECT COUNT(created) AS sum, DATE(created) AS date FROM events GROUP BY date DESC LIMIT '.$days.') AS `table` ORDER BY date ASC'
 		)->fetchAll('assoc');
         
         $usage_created_sum = $connection->execute(
-		    'SELECT SUM(sum) as sum FROM (SELECT COUNT(created) AS sum, DATE(created) AS date FROM events GROUP BY date DESC LIMIT 7) AS `table` ORDER BY date ASC'
+		    'SELECT SUM(sum) as sum FROM (SELECT COUNT(created) AS sum, DATE(created) AS date FROM events GROUP BY date DESC LIMIT '.$days.') AS `table` ORDER BY date ASC'
 		)->fetchAll('assoc');
 
         $usage_created_max = $connection->execute(
