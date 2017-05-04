@@ -36,7 +36,7 @@ class EventsCell extends Cell
 		)->fetchAll('assoc');
 
         $usage_created_max = $connection->execute(
-		    'SELECT MAX(sum) as max FROM (SELECT COUNT(created) AS sum, DATE(created) AS date FROM events GROUP BY date DESC LIMIT 7) AS `table` ORDER BY date ASC'
+		    'SELECT MAX(sum) as max FROM (SELECT COUNT(created) AS sum, DATE(created) AS date FROM events GROUP BY date DESC LIMIT '.$days.') AS `table` ORDER BY date ASC'
 		)->fetchAll('assoc');
 
         $approved = $this->Events->find('all')->where(['event_approval'=>'approved']);
