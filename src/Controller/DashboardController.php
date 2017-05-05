@@ -4,6 +4,9 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
+use App\Shell\Task\SyncTask;
+use Cake\Core\Configure;
+
 
 /**
  * Events Controller
@@ -23,5 +26,18 @@ class DashboardController extends AppController
         $this->set(compact('events'));
 
 		$this->set('_serialize', ['datasources','events']);
+		
+		try {
+			$task = (new SyncTask());
+			
+			$raw = $task
+				->getFacebook()
+				->get("/me", $task->getAccessToken())
+				->getDecodedBody();
+		} catch (\Exception $ex) {
+			$ref = Configure::read('App.fullBaseUrl');
+			$msg = "Facebook: ($ref) ".$ex->getMessage();
+			$this->Flash->error(__($msg));
+		}
 	}
 }
