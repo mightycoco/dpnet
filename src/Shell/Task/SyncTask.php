@@ -3,6 +3,7 @@ namespace App\Shell\Task;
 use Cake\Console\Shell;
 use Cake\ORM\TableRegistry;
 use Cake\Core\Configure;
+use App\Controller\Helper\SlackPushConnector;
 
 class SyncTask extends Shell {
 	// var $uses = array('Users'); // same as controller var $uses
@@ -17,9 +18,17 @@ class SyncTask extends Shell {
 		
 		$access_token = $this->getAccessToken();
 
-		$fb = $this->getFacebook();
-		
-		$response = $fb->get("/$id/events?since=".time(), $access_token);
+		try {
+			$fb = $this->getFacebook();
+			
+			$response = $fb->get("/$id/events?since=".time(), $access_token);
+		} catch(\Exception $ex) {
+			$msg = "Facebook: ".$ex->getMessage() . "\n";
+			echo $msg;
+			$slack = new SlackPushConnector();
+			$slack->push($msg, "date", "dpnet-bot", "notifications");
+			die();
+		}
 		$eventsEdge = $response->getGraphEdge()->asArray();
 
 		$cmpDate = function($a, $b)
