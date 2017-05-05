@@ -104,9 +104,8 @@ class SubsystemController extends AppController
 				. "&code=" . $code;
 			
 			$response = file_get_contents($token_url);
-			$params = null;
-			parse_str($response, $params);
-			$access_token = $params['access_token'];
+			$access_token = json_decode($response)->access_token;
+			$this->set('access_token', $access_token);
 		}
 		
 		$response = null;
@@ -118,9 +117,11 @@ class SubsystemController extends AppController
 		} catch(\Facebook\Exceptions\FacebookResponseException $e) {
 			// When Graph returns an error
 			echo 'Graph returned an error: ' . $e->getMessage();
+			$this->Flash->error('Graph returned an error: ' . $e->getMessage());
 		} catch(\Facebook\Exceptions\FacebookSDKException $e) {
 			// When validation fails or other local issues
 			echo 'Facebook SDK returned an error: ' . $e->getMessage();
+			$this->Flash->error('Facebook SDK returned an error: ' . $e->getMessage());
 		}
 		
 		if($access_token) {
@@ -133,8 +134,9 @@ class SubsystemController extends AppController
 		} else {
 			$this->Flash->error(__('Couldn\'t request a token'));
 		}
-
-    	return $this->redirect(['action' => 'index']);
+		
+		return $this->render("index");
+    	//return $this->redirect(['action' => 'index']);
     }
 
     /**
