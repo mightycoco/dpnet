@@ -26,6 +26,7 @@ var translate = function(text, targetLang) {
 	var defer = $.Deferred();
 	var sourceLang = "auto";
 	if(!targetLang) targetLang = navigator.language ? navigator.language : "en";
+	text = text.replace(/&/g, " AND ").replace(/amp;/g, "");
 	
 	var url = "//translate.googleapis.com/translate_a/single?client=gtx&sl=" 
 	            + sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURI(text);
