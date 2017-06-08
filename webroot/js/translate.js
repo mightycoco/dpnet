@@ -29,24 +29,30 @@ var translate = function(text, targetLang) {
 	
 	var url = "//translate.googleapis.com/translate_a/single?client=gtx&sl=" 
 	            + sourceLang + "&tl=" + targetLang + "&dt=t&q=" + encodeURI(text);
+	var translated = "";
 	  
 	$.ajax({
 		url:url, 
 		processData:false
 	})
   	.always(function(data) {
-  		if(!data.responseText) {
+  		if(!data.responseText && !$.isArray(data[0])) {
   			defer.resolve({
 				"text": text,
 				"translated": "the translation service returned an error"
 			});
-  		} else {
+  		} else if(data.responseText) {
 			var keyvalues = JSON.parse(data.responseText.replace(/,,/g, ",").replace(/,,/g, ","))[0];
-			var translated = "";
 			$.each(keyvalues, function(i, e) {
 				translated += e[0] + "<br/>\n";
 			});
 			defer.resolve({
+				"text": text,
+				"translated": translated
+			});
+  		} else if($.isArray(data[0])) {
+  			$.grep(data[0], function(a) {translated+=a[0]});
+  			defer.resolve({
 				"text": text,
 				"translated": translated
 			});
