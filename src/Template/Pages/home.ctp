@@ -31,19 +31,20 @@
 	<section id='agenda'>
 		<?php foreach ($events as $event): ?>
 		<?php
-			$time = $event->event_start->format('D, d/m/Y H:i\h');
+			$full_time = $event->event_start->format('D, d/m/Y H:i\h');
+			$time = $full_time;
 			if($event->event_start->isToday()) $time = 'Today '.$event->event_start->format('H:i\h');
 			else if($event->event_start->isTomorrow()) $time = 'Tomorrow '.$event->event_start->format('H:i\h');
 			else if($event->event_start->isThisWeek()) $time = $event->event_start->format('l H:i\h');
 		?>
-        <div id='<?= $event->id ?>' class='event_item <?= in_array($event->event_start->format('N'), [5,6], false) ? "weekend" : ""  ?>' index='1'>
-        	<time><?=$time?></time>
-        	<cover><?php if($event->cover): ?><img src='<?=$event->cover?>'/><?php else: ?><placeholder></placeholder><?php endif; ?></cover>
+        <div id='<?= $event->id ?>' class='event_item <?= in_array($event->event_start->format('N'), [5,6], false) ? "weekend" : ""  ?>' index='1' itemscope itemtype="http://schema.org/Event">
+        	<time datetime="$full_time" itemprop="startDate"><?=$time?></time>
+        	<cover itemprop="image"><?php if($event->cover): ?><img src='<?=$event->cover?>'/><?php else: ?><placeholder></placeholder><?php endif; ?></cover>
         	<info>
-        		<name><!--<a href='https://facebook.com/<?= $event->id ?>' target='fb'>--><?= $event->event_name ?><!--</a>--></name>
-	        	<place><?= $event->place_name ?></place>
+        		<name itemprop="name"><!--<a href='https://facebook.com/<?= $event->id ?>' target='fb'>--><?= $event->event_name ?><!--</a>--></name>
+	        	<place itemprop="place"><?= $event->place_name ?></place>
 	        	<!--<a href="https://www.google.com/maps?q=<?= $event->loc_latitude ?>,<?= $event->loc_longitude ?>" target="gmaps">-->
-	        		<location> in <?= $event->loc_city ?> (<?= $event->loc_country ?>)</location>
+	        		<location itemprop="location"> in <?= $event->loc_city ?> (<?= $event->loc_country ?>)</location>
 	        	<!--</a>-->
         	</info>
         </div>
