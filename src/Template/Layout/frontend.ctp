@@ -29,6 +29,7 @@
 	<meta property="article:section" content="Events" />
 	<meta name="page-topic" content="musik">
 	<meta name="keywords" content="ebm, wave, gothic, synth-wave, electropop, industrial, neo-folk, electronica, minimal, noise">
+	<meta name="revisit-after" content="14 days">
 	<title>dark-party.net</title>
 	<?= $this->Html->css('reset.css') ?>
 	<?= $this->Html->css('frontend.css') ?>
