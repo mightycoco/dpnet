@@ -13,6 +13,22 @@
 	<meta property="og:image" content="https://dark-party.net/webroot/img/dpn.png" />
 	<meta property="og:title" content="dark-party.net - the darker party network for europe" />
 	<meta property="og:description" content="find events around you. ebm, wave, gothic, synth-wave, electropop, industrial, neo-folk, electronica, minimal, noise..." />
+	<meta property="og:url" content="http://www.spontis.de/dunkeltanz/" />
+	<meta property="og:site_name" content="dark-party" />
+	<meta property="article:tag" content="Club" />
+	<meta property="article:tag" content="Gothic" />
+	<meta property="article:tag" content="Grufti" />
+	<meta property="article:tag" content="Party" />
+	<meta property="article:tag" content="EBM" />
+	<meta property="article:tag" content="Wave" />
+	<meta property="article:tag" content="Dark" />
+	<meta property="article:tag" content="Industrial" />
+	<meta property="article:tag" content="Noise" />
+	<meta property="article:tag" content="Electronic" />
+	<meta property="article:tag" content="Neo-Folk" />
+	<meta property="article:section" content="Events" />
+	<meta name="page-topic" content="musik">
+	<meta name="keywords" content="ebm, wave, gothic, synth-wave, electropop, industrial, neo-folk, electronica, minimal, noise">
 	<title>dark-party.net</title>
 	<?= $this->Html->css('reset.css') ?>
 	<?= $this->Html->css('frontend.css') ?>
