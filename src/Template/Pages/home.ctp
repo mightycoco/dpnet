@@ -39,7 +39,7 @@
 		?>
         <div id='<?= $event->id ?>' class='event_item <?= in_array($event->event_start->format('N'), [5,6], false) ? "weekend" : ""  ?>' index='1' itemscope itemtype="http://schema.org/Event">
         	<time datetime="<?=$full_time?>" itemprop="startDate"><?=$time?></time>
-        	<cover itemprop="image"><?php if($event->cover): ?><img src='<?=$event->cover?>'/><?php else: ?><placeholder></placeholder><?php endif; ?></cover>
+        	<cover><?php if($event->cover): ?><img itemprop="image" src='<?=$event->cover?>'/><?php else: ?><placeholder></placeholder><?php endif; ?></cover>
         	<info>
         		<name itemprop="name"><!--<a href='https://facebook.com/<?= $event->id ?>' target='fb'>--><?= $event->event_name ?><!--</a>--></name>
 	        	<place itemprop="place"><?= $event->place_name ?></place>
