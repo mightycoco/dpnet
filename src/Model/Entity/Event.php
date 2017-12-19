@@ -57,6 +57,24 @@ class Event extends Entity
     
     public function getWeight() {
     	$weight = 0;
+    	$text = strtolower($this->event_name . " " . $this->place_name . " " . $this->event_description);
+    	
+		$good = ['synthwave','walpurgis','walpurgisnacht','underground','wgt','electropop','synthpop','depeche','ndh','welle','nachtwerk','ebm','electronic','industrial','industrie','punk','punk rock','folk','electro','edm','electric','minimal','goth','mystik','mystic','mystisch','gothic','wave','ndh','ndw','80s','dark','schwarz','schwarzen','schwarze','mittelalter','mittelalterfestivals','mittelalterfestival','mediaval','indie','alternative','fetish','latex','leder','leather','bondage','morbid','morbide','morbiden','gothrock','rabennacht','synthie','new wave', 'electronic body music', 'synth pop', 'darkfloor', 'darkroom', 'düster', 'schandmaul', 'laibach', 'creatures of the night'];
+		$bad = ['psychobilly','schlager','eisenbahnmuseum','ü30','rockparty','cosmetogenesi','marathon','fitness','sports','deathmetal','boogie','glamrock','woodstock','krautrock','deathcore','hardcore','metalcore','grunge','doom','discofox','techhouse','reggae','dancehall','afro','afrobeats','rockabilly','hip','hop','hiphop','soul','blues','house','techno','country','countryrock','cover','covers','heavy','metal','hardrock','rock','karaoke','crossover','mieten','soulstimme','gitarrenmusik','bluesrock','grindcore','noisecore','funk','blues rock','glam rock','70s rock','80s rock','90s rock','slipknot','party hits','beste stimmung','jazz','jazz jam', 'schafkopf', 'black metal', 'lovepop', 'böhse onkelz'];
+		
+		foreach($good as $word) {
+			if (strpos($text, $word) !== false) $weight++;
+		}
+
+		foreach($bad as $word) {
+			if (strpos($text, $word) !== false) $weight--;
+		}		
+
+    	return $weight;
+    }
+    
+    public function getWeight2() {
+    	$weight = 0;
 		$good = ['synthwave','walpurgis','walpurgisnacht','underground','wgt','electropop','synthpop','depeche','ndh','welle','nachtwerk','ebm','electronic','industrial','industrie','punk','folk','electro','edm','electric','minimal','goth','mystik','mystic','mystisch','gothic','wave','ndh','ndw','80s','dark','schwarz','schwarzen','schwarze','mittelalter','mittelalterfestivals','mittelalterfestival','mediaval','indie','alternative','fetish','latex','leder','leather','bondage','morbid','morbide','morbiden','nw','gothrock','rabennacht','synthie'];
 		$bad = ['psychobilly','schlager','eisenbahnmuseum','ü30','rockparty','cosmetogenesi','marathon','fitness','sports','deathmetal','boogie','glamrock','woodstock','krautrock','deathcore','hardcore','metalcore','grunge','doom','discofox','techhouse','reggae','dancehall','afro','afrobeats','rockabilly','hip','hop','hiphop','soul','blues','house','techno','country','countryrock','cover','covers','heavy','metal','hardrock','rock','karaoke','crossover','mieten','soulstimme','gGitarrenmusik','bluesrock','grindcore','noisecore','funk'];
 

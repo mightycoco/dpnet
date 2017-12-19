@@ -197,6 +197,23 @@ class ConsoleShell extends Shell
 		}
     }
     
+    public function reWeight() {
+    	$eventsTable = TableRegistry::get('Events');
+    	$events = $eventsTable->find('all');
+    	$i = 0;
+    	foreach($events as $event) {
+    		if((
+    			($event->getWeight2() < 0 && $event->event_approval != "rejected")
+    		 || ($event->getWeight2() > 0 && $event->event_approval != "approved")
+    		 || $event->getWeight2() == 0
+    		) && $event->event_approval != "pending") {
+    			echo $event->getWeight()." - ".$event->getWeight2()." - ".$event['event_approval']." | ".$event['id']." ".$event['event_name'].PHP_EOL;
+    			if(++$i>30) break;
+    		}
+    	}
+    	
+    }
+    
     public function sync($id = null) {
 		$events = $this->Sync->execute($id);
 		$eventsTable = TableRegistry::get('Events');
